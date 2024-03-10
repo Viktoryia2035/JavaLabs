@@ -46,7 +46,7 @@ public class DayController {
     @DeleteMapping("deleteSunriseSunset")
     public ResponseEntity<String> deleteCitySunriseSunset(@RequestParam String location) {
         try {
-            String result = service.deleteDaySunriseSunset(location);
+            service.deleteDaySunriseSunset(location);
             return new ResponseEntity<>("The deletion was successful", HttpStatus.OK);
         } catch (SunriseSunsetException e) {
             return new ResponseEntity<>("Sunrise/sunset not found", HttpStatus.NOT_FOUND);
@@ -56,7 +56,7 @@ public class DayController {
     @DeleteMapping("deleteByCoordinates")
     public ResponseEntity<String> deleteCityByCoordinates(@RequestParam String coordinates) {
         try {
-            String resultOfDelete = service.deleteDayByCoordinates(coordinates);
+            service.deleteDayByCoordinates(coordinates);
             return new ResponseEntity<>("The deletion was successful", HttpStatus.OK);
         } catch (SunriseSunsetException e) {
             return new ResponseEntity<>("Sunrise/sunset not found", HttpStatus.NOT_FOUND);
