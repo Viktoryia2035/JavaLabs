@@ -20,7 +20,7 @@ public class CityService {
     private final InMemoryCityDAO repositoryOfCity;
     private final InMemoryDayDAO repositoryOfDay;
 
-    public static final String messageOfCity = "City not found";
+    public static final String MESSAGE_OF_CITY = "City not found";
 
     public List<City> findAll() {
         return repositoryOfCity.findAll();
@@ -43,7 +43,7 @@ public class CityService {
                 repositoryOfCity.delete(cityToDelete);
                 return "The deletion was successful";
             } else {
-                throw new SunriseSunsetException(messageOfCity);
+                throw new SunriseSunsetException(MESSAGE_OF_CITY);
             }
         } catch (SunriseSunsetException e) {
             return e.getMessage();
@@ -57,7 +57,7 @@ public class CityService {
             repositoryOfCity.save(existingCity);
             return existingCity;
         } else {
-            throw new SunriseSunsetException(messageOfCity);
+            throw new SunriseSunsetException(MESSAGE_OF_CITY);
         }
     }
 
