@@ -1,6 +1,6 @@
 package sunposition.springday.service;
 
-import org.springframework.web.bind.annotation.*;
+import sunposition.springday.exception.SunriseSunsetException;
 import sunposition.springday.model.Day;
 
 import java.time.LocalDate;
@@ -29,22 +29,30 @@ public class DayService {
     }
 
     public String deleteDaySunriseSunset(String location) {
-        Day cityToDelete = repository.findByLocation(location);
-        if (cityToDelete != null) {
-            repository.delete(cityToDelete);
-            return "Delete";
-        } else {
-            return "Not found.";
+        try {
+            Day cityToDelete = repository.findByLocation(location);
+            if (cityToDelete != null) {
+                repository.delete(cityToDelete);
+                return "The deletion was successful";
+            } else {
+                throw new SunriseSunsetException("Sunrise/sunset not found");
+            }
+        } catch (SunriseSunsetException e) {
+            return e.getMessage();
         }
     }
 
     public String deleteDayByCoordinates(String coordinates) {
-        Day cityToDelete = repository.findByCoordinates(coordinates);
-        if (cityToDelete != null) {
-            repository.delete(cityToDelete);
-            return "Delete";
-        } else {
-            return "Not found.";
+        try {
+            Day cityToDelete = repository.findByCoordinates(coordinates);
+            if (cityToDelete != null) {
+                repository.delete(cityToDelete);
+                return "The deletion was successful";
+            } else {
+                throw new SunriseSunsetException("Sunrise/sunset not found");
+            }
+        } catch (SunriseSunsetException e) {
+            return e.getMessage();
         }
     }
 
@@ -63,15 +71,14 @@ public class DayService {
         return null;
     }
 
-    public Day updateDayByName(String location, String coordinates) {
+    public Day updateSunriseSunset(String location, String coordinates) {
         Day existingDay = repository.findByLocation(location);
         if (existingDay != null) {
             existingDay.setCoordinates(coordinates);
             existingDay.setLocation(location);
-            repository.save(existingDay);
             return repository.save(existingDay);
         } else {
-            return null;
+            throw new SunriseSunsetException("Sunrise/sunset not found");
         }
     }
 }

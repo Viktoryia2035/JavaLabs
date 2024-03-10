@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import sunposition.springday.exception.SunriseSunsetException;
 import sunposition.springday.model.City;
 import sunposition.springday.service.CityService;
 
@@ -26,7 +27,6 @@ public class CityController {
         return service.saveCity(city);
     }
 
-
     @GetMapping("findName")
     public City findByNameCity(@RequestParam String name) {
         return service.findByNameCity(name);
@@ -34,22 +34,21 @@ public class CityController {
 
     @DeleteMapping("deleteByName")
     public ResponseEntity<String> deleteCityByName(@RequestParam String name) {
-        String result = service.deleteCityByName(name);
-        if ("Delete".equals(result)) {
-            return new ResponseEntity<>(result, HttpStatus.OK);
-        } else {
+        try {
+            service.deleteCityByName(name);
+            return new ResponseEntity<>("The deletion was successful", HttpStatus.OK);
+        } catch (SunriseSunsetException e) {
             return new ResponseEntity<>("City not found", HttpStatus.NOT_FOUND);
         }
     }
 
     @PatchMapping("updateByName")
     public ResponseEntity<String> updateCityByName(@RequestParam String name, @RequestParam String newName) {
-        City updatedRegion = service.updateCityByName(name, newName);
-        if (updatedRegion != null) {
-            return new ResponseEntity<>("Updated city: " , HttpStatus.OK);
-        } else {
+        try {
+            City updatedCity = service.updateCityByName(name, newName);
+            return new ResponseEntity<>("Updated city: " + updatedCity.getName(), HttpStatus.OK);
+        } catch (SunriseSunsetException e) {
             return new ResponseEntity<>("City not found", HttpStatus.NOT_FOUND);
         }
     }
-
 }

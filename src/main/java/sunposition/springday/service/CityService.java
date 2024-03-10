@@ -5,8 +5,8 @@ import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
+import sunposition.springday.exception.SunriseSunsetException;
 import sunposition.springday.model.City;
-import sunposition.springday.model.Day;
 import sunposition.springday.repository.InMemoryCityDAO;
 import sunposition.springday.repository.InMemoryDayDAO;
 
@@ -17,53 +17,45 @@ import java.util.List;
 @Primary
 @Transactional
 public class CityService {
-    private final InMemoryCityDAO repository;
-    private final InMemoryDayDAO repos;
+    private final InMemoryCityDAO repositoryOfCity;
+    private final InMemoryDayDAO repositoryOfDay;
 
-    public List<City>  findAll(){
-        return repository.findAll();
+    public List<City> findAll() {
+        return repositoryOfCity.findAll();
     }
-
 
     public City saveCity(City newCity) {
-        List<Day> temp = newCity.getDays();
-        Day temp1;
-        for(int i=0;i<temp.size();i++)
-        {
-            temp1=temp.get(i);
-            repos.save(temp1);
-        }
-        return repository.save(newCity);
+        repositoryOfDay.saveAll(newCity.getDays());
+        return repositoryOfCity.save(newCity);
     }
-    public City findByNameCity(String name){
-        return  repository.findByName(name);
+
+    public City findByNameCity(String name) {
+        return repositoryOfCity.findByName(name);
     }
 
     public String deleteCityByName(String name) {
-
-        City cityToDelete = repository.findByName(name);
-        List<Day> temp = cityToDelete.getDays();
-        Day temp1;
-        for(int i=0;i<temp.size();i++)
-        {
-            temp1=temp.get(i);
-            repos.delete(temp1);
-        }
-        if (cityToDelete != null) {
-            repository.delete(cityToDelete);
-            return "Delete";
-        } else {
-            return "Not found.";
+        try {
+            City cityToDelete = repositoryOfCity.findByName(name);
+            if (cityToDelete != null) {
+                repositoryOfDay.deleteAll(cityToDelete.getDays());
+                repositoryOfCity.delete(cityToDelete);
+                return "The deletion was successful";
+            } else {
+                throw new SunriseSunsetException("City not found");
+            }
+        } catch (SunriseSunsetException e) {
+            return e.getMessage();
         }
     }
+
     public City updateCityByName(String name, String newName) {
-        City existingCity = repository.findByName(name);
+        City existingCity = repositoryOfCity.findByName(name);
         if (existingCity != null) {
             existingCity.setName(newName);
-            repository.save(existingCity);
+            repositoryOfCity.save(existingCity);
             return existingCity;
         } else {
-            return null;
+            throw new SunriseSunsetException("City not found");
         }
     }
 

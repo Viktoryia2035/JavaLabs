@@ -7,6 +7,6 @@ import sunposition.springday.model.City;
 
 @Repository
 
-public interface InMemoryCityDAO extends JpaRepository<City, Long>{
+public interface InMemoryCityDAO extends JpaRepository<City, Long> {
     City findByName(String name);
 }
