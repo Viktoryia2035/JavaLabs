@@ -10,6 +10,8 @@ import sunposition.springday.service.CityService;
 
 import java.util.List;
 
+import static sunposition.springday.service.CityService.messageOfCity;
+
 @RestController
 @RequestMapping("/api/v2/city")
 @AllArgsConstructor
@@ -38,7 +40,7 @@ public class CityController {
             service.deleteCityByName(name);
             return new ResponseEntity<>("The deletion was successful", HttpStatus.OK);
         } catch (SunriseSunsetException e) {
-            return new ResponseEntity<>("City not found", HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(messageOfCity, HttpStatus.NOT_FOUND);
         }
     }
 
@@ -48,7 +50,7 @@ public class CityController {
             City updatedCity = service.updateCityByName(name, newName);
             return new ResponseEntity<>("Updated city: " + updatedCity.getName(), HttpStatus.OK);
         } catch (SunriseSunsetException e) {
-            return new ResponseEntity<>("City not found", HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(messageOfCity, HttpStatus.NOT_FOUND);
         }
     }
 }

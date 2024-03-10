@@ -20,6 +20,8 @@ import sunposition.springday.repository.InMemoryDayDAO;
 public class DayService {
     private final InMemoryDayDAO repository;
 
+    public static final String messageOfDay = "Sunrise/sunset not found";
+
     public List<Day> findAllSunriseSunset() {
         return repository.findAll();
     }
@@ -35,7 +37,7 @@ public class DayService {
                 repository.delete(cityToDelete);
                 return "The deletion was successful";
             } else {
-                throw new SunriseSunsetException("Sunrise/sunset not found");
+                throw new SunriseSunsetException(messageOfDay);
             }
         } catch (SunriseSunsetException e) {
             return e.getMessage();
@@ -49,7 +51,7 @@ public class DayService {
                 repository.delete(cityToDelete);
                 return "The deletion was successful";
             } else {
-                throw new SunriseSunsetException("Sunrise/sunset not found");
+                throw new SunriseSunsetException(messageOfDay);
             }
         } catch (SunriseSunsetException e) {
             return e.getMessage();
@@ -78,7 +80,7 @@ public class DayService {
             existingDay.setLocation(location);
             return repository.save(existingDay);
         } else {
-            throw new SunriseSunsetException("Sunrise/sunset not found");
+            throw new SunriseSunsetException(messageOfDay);
         }
     }
 }
