@@ -12,7 +12,7 @@ import sunposition.springday.service.DayService;
 import java.time.LocalDate;
 import java.util.List;
 
-import static sunposition.springday.service.DayService.messageOfDay;
+import static sunposition.springday.service.DayService.MESSAGE_OF_DAY;
 
 @RestController
 @RequestMapping("/api/v2/sunrise_sunset")
@@ -51,7 +51,7 @@ public class DayController {
             service.deleteDaySunriseSunset(location);
             return new ResponseEntity<>("The deletion was successful", HttpStatus.OK);
         } catch (SunriseSunsetException e) {
-            return new ResponseEntity<>(messageOfDay, HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(MESSAGE_OF_DAY, HttpStatus.NOT_FOUND);
         }
     }
 
@@ -61,7 +61,7 @@ public class DayController {
             service.deleteDayByCoordinates(coordinates);
             return new ResponseEntity<>("The deletion was successful", HttpStatus.OK);
         } catch (SunriseSunsetException e) {
-            return new ResponseEntity<>(messageOfDay, HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(MESSAGE_OF_DAY, HttpStatus.NOT_FOUND);
         }
     }
 
