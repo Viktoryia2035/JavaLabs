@@ -9,9 +9,9 @@ import java.util.List;
 @Entity
 @NoArgsConstructor
 @Data
-@Table(name = "city")
+@Table(name = "country")
 
-public class City {
+public class Country {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -19,6 +19,6 @@ public class City {
     private String name;
 
     @OneToMany
-    @JoinColumn(name = "city_id")
+    @JoinColumn(name = "country_id")
     private List<Day> days;
 }
