@@ -7,7 +7,6 @@ import java.time.LocalDate;
 
 
 public interface InMemoryDayDAO extends JpaRepository<Day, Long> {
-    Day findByLocation(String location);
 
     Day findByCoordinates(String coordinates);
 

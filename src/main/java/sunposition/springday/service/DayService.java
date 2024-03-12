@@ -30,37 +30,17 @@ public class DayService {
         return repository.save(day);
     }
 
-    public String deleteDaySunriseSunset(String location) {
-        try {
-            Day cityToDelete = repository.findByLocation(location);
-            if (cityToDelete != null) {
-                repository.delete(cityToDelete);
-                return "The deletion was successful";
-            } else {
-                throw new SunriseSunsetException(MESSAGE_OF_DAY);
-            }
-        } catch (SunriseSunsetException e) {
-            return e.getMessage();
-        }
-    }
-
-    public String deleteDayByCoordinates(String coordinates) {
+    public void deleteDayByCoordinates(String coordinates) {
         try {
             Day cityToDelete = repository.findByCoordinates(coordinates);
             if (cityToDelete != null) {
                 repository.delete(cityToDelete);
-                return "The deletion was successful";
             } else {
                 throw new SunriseSunsetException(MESSAGE_OF_DAY);
             }
         } catch (SunriseSunsetException e) {
-            return e.getMessage();
+            System.out.println(e.getMessage());
         }
-    }
-
-    public Day findByLocation(String location) {
-        repository.findByLocation(location);
-        return null;
     }
 
     public Day findByCoordinates(String coordinates) {
@@ -73,11 +53,11 @@ public class DayService {
         return null;
     }
 
-    public Day updateSunriseSunset(String location, String coordinates) {
-        Day existingDay = repository.findByLocation(location);
+    public Day updateSunriseSunset(String coordinates, LocalDate dateOfSunriseSunset) {
+        Day existingDay = repository.findByDateOfSunriseSunset(dateOfSunriseSunset);
         if (existingDay != null) {
             existingDay.setCoordinates(coordinates);
-            existingDay.setLocation(location);
+            existingDay.setDateOfSunriseSunset(dateOfSunriseSunset);
             return repository.save(existingDay);
         } else {
             throw new SunriseSunsetException(MESSAGE_OF_DAY);

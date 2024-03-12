@@ -30,11 +30,6 @@ public class DayController {
         return service.saveSunriseSunset(day);
     }
 
-    @GetMapping("findByLocation")
-    public Day findByLocation(@RequestParam String location) {
-        return service.findByLocation(location);
-    }
-
     @GetMapping("findByCoordinates")
     public Day findByCoordinates(@RequestParam String coordinates) {
         return service.findByCoordinates(coordinates);
@@ -43,16 +38,6 @@ public class DayController {
     @GetMapping("findByDateOfSunriseSunset")
     public Day findByDateOfSunriseSunset(@RequestParam LocalDate dateOfSunriseSunset) {
         return service.findByDateOfSunriseSunset(dateOfSunriseSunset);
-    }
-
-    @DeleteMapping("deleteSunriseSunset")
-    public ResponseEntity<String> deleteCitySunriseSunset(@RequestParam String location) {
-        try {
-            service.deleteDaySunriseSunset(location);
-            return new ResponseEntity<>("The deletion was successful", HttpStatus.OK);
-        } catch (SunriseSunsetException e) {
-            return new ResponseEntity<>(MESSAGE_OF_DAY, HttpStatus.NOT_FOUND);
-        }
     }
 
     @DeleteMapping("deleteByCoordinates")
@@ -66,7 +51,7 @@ public class DayController {
     }
 
     @PutMapping("updateSunriseSunset")
-    public Day updateSunriseSunset(@RequestParam String location, @RequestParam String coordinates) {
-        return service.updateSunriseSunset(location, coordinates);
+    public Day updateSunriseSunset(@RequestParam String coordinates, @RequestParam LocalDate dateOfSunriseSunset) {
+        return service.updateSunriseSunset(coordinates, dateOfSunriseSunset);
     }
 }

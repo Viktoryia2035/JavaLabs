@@ -35,7 +35,7 @@ public class CountryController {
     }
 
     @DeleteMapping("deleteByName")
-    public ResponseEntity<String> deleteCityByName(@RequestParam String name) {
+    public ResponseEntity<String> deleteCountryByName(@RequestParam String name) {
         try {
             service.deleteCountryByName(name);
             return new ResponseEntity<>("The deletion was successful", HttpStatus.OK);
