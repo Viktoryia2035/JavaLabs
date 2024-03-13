@@ -1,12 +1,14 @@
 package sunposition.springday.service;
 
-
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 import sunposition.springday.exception.SunriseSunsetException;
+import sunposition.springday.model.City;
 import sunposition.springday.model.Country;
+import sunposition.springday.model.Day;
+import sunposition.springday.repository.InMemoryCityDAO;
 import sunposition.springday.repository.InMemoryCountryDAO;
 import sunposition.springday.repository.InMemoryDayDAO;
 
@@ -17,6 +19,8 @@ import java.util.List;
 @Primary
 @Transactional
 public class CountryService {
+
+    private final InMemoryCityDAO repositoryOfCity;
     private final InMemoryCountryDAO repositoryOfCountry;
     private final InMemoryDayDAO repositoryOfDay;
 
@@ -27,7 +31,12 @@ public class CountryService {
     }
 
     public Country saveCountry(Country newCountry) {
-        repositoryOfDay.saveAll(newCountry.getDays());
+        List<City> cities = newCountry.getCities();
+        for (City city : cities) {
+            List<Day> days = city.getDays();
+            repositoryOfDay.saveAll(days);
+            repositoryOfCity.save(city);
+        }
         return repositoryOfCountry.save(newCountry);
     }
 
@@ -39,7 +48,14 @@ public class CountryService {
         try {
             Country countryToDelete = repositoryOfCountry.findByName(name);
             if (countryToDelete != null) {
-                repositoryOfDay.deleteAll(countryToDelete.getDays());
+                List<City> cities = countryToDelete.getCities();
+
+                for (City city : cities) {
+                    List<Day> days = city.getDays();
+                    repositoryOfDay.deleteAll(days);
+                    repositoryOfCity.delete(city);
+                }
+
                 repositoryOfCountry.delete(countryToDelete);
             } else {
                 throw new SunriseSunsetException(MESSAGE_OF_COUNTRY);
@@ -59,5 +75,4 @@ public class CountryService {
             throw new SunriseSunsetException(MESSAGE_OF_COUNTRY);
         }
     }
-
 }

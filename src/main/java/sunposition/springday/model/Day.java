@@ -14,8 +14,16 @@ public class Day {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(name = "coordinates")
     private String coordinates;
+
+    @Column(name = "date")
     private LocalDate dateOfSunriseSunset;
+
+    @Column(name = "sunrise")
     private LocalTime timeOfSunrise;
+
+    @Column(name = "sunset")
     private LocalTime timeOfSunset;
 }

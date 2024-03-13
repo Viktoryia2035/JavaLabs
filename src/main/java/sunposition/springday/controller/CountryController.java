@@ -16,11 +16,10 @@ import static sunposition.springday.service.CountryService.MESSAGE_OF_COUNTRY;
 @RequestMapping("/api/v2/country")
 @AllArgsConstructor
 public class CountryController {
-
     private final CountryService service;
 
     @GetMapping()
-    public List<Country> findAllCountry() {
+    public List<Country> findAllCountries() {
         return service.findAll();
     }
 
@@ -48,7 +47,7 @@ public class CountryController {
     public ResponseEntity<String> updateCountryByName(@RequestParam String name, @RequestParam String newName) {
         try {
             Country updatedCountry = service.updateCountryByName(name, newName);
-            return new ResponseEntity<>("Updated city: " + updatedCountry.getName(), HttpStatus.OK);
+            return new ResponseEntity<>("Updated country: " + updatedCountry.getName(), HttpStatus.OK);
         } catch (SunriseSunsetException e) {
             return new ResponseEntity<>(MESSAGE_OF_COUNTRY, HttpStatus.NOT_FOUND);
         }
