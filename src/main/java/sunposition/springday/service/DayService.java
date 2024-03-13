@@ -43,6 +43,11 @@ public class DayService {
         }
     }
 
+    public Day findByLocation(String location) {
+        repository.findByLocation(location);
+        return null;
+    }
+
     public Day findByCoordinates(String coordinates) {
         repository.findByCoordinates(coordinates);
         return null;
@@ -53,8 +58,8 @@ public class DayService {
         return null;
     }
 
-    public Day updateSunriseSunset(String coordinates, LocalDate dateOfSunriseSunset) {
-        Day existingDay = repository.findByDateOfSunriseSunset(dateOfSunriseSunset);
+    public Day updateSunriseSunset(String location, String coordinates, LocalDate dateOfSunriseSunset) {
+        Day existingDay = repository.findByLocation(location);
         if (existingDay != null) {
             existingDay.setCoordinates(coordinates);
             existingDay.setDateOfSunriseSunset(dateOfSunriseSunset);

@@ -15,6 +15,9 @@ public class Day {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "location")
+    private String location;
+
     @Column(name = "coordinates")
     private String coordinates;
 

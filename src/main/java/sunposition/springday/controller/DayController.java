@@ -30,6 +30,11 @@ public class DayController {
         return service.saveSunriseSunset(day);
     }
 
+    @GetMapping("findByLocation")
+    public Day findByLocation(@RequestParam String location) {
+        return service.findByLocation(location);
+    }
+
     @GetMapping("findByCoordinates")
     public Day findByCoordinates(@RequestParam String coordinates) {
         return service.findByCoordinates(coordinates);
@@ -51,7 +56,7 @@ public class DayController {
     }
 
     @PutMapping("updateSunriseSunset")
-    public Day updateSunriseSunset(@RequestParam String coordinates, @RequestParam LocalDate dateOfSunriseSunset) {
-        return service.updateSunriseSunset(coordinates, dateOfSunriseSunset);
+    public Day updateSunriseSunset(@RequestParam String location, @RequestParam String coordinates, @RequestParam LocalDate dateOfSunriseSunset) {
+        return service.updateSunriseSunset(location, coordinates, dateOfSunriseSunset);
     }
 }
