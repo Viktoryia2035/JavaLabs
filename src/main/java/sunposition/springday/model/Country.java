@@ -1,7 +1,6 @@
 package sunposition.springday.model;
 
 import jakarta.persistence.*;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -22,7 +21,8 @@ public class Country {
     @Column(name = "capital")
     private String capital;
 
-    @ManyToMany(mappedBy = "countries")
-    @JsonIgnore
-    private List<City> cities;
+    @OneToMany
+    @JoinColumn(name = "country_id")
+    private List<Day> days;
+
 }
