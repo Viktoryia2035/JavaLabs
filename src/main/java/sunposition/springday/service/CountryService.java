@@ -36,16 +36,12 @@ public class CountryService {
     }
 
     public void deleteCountryByName(String name) {
-        try {
-            Country countryToDelete = repositoryOfCountry.findByName(name);
-            if (countryToDelete != null) {
-                repositoryOfDay.deleteAll(countryToDelete.getDays());
-                repositoryOfCountry.delete(countryToDelete);
-            } else {
-                throw new SunriseSunsetException(MESSAGE_OF_COUNTRY);
-            }
-        } catch (SunriseSunsetException e) {
-            System.out.println(e.getMessage());
+        Country countryToDelete = repositoryOfCountry.findByName(name);
+        if (countryToDelete != null) {
+            repositoryOfDay.deleteAll(countryToDelete.getDays());
+            repositoryOfCountry.delete(countryToDelete);
+        } else {
+            throw new SunriseSunsetException(MESSAGE_OF_COUNTRY);
         }
     }
 

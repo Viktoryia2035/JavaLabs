@@ -31,15 +31,11 @@ public class DayService {
     }
 
     public void deleteDayByCoordinates(String coordinates) {
-        try {
-            Day cityToDelete = repository.findByCoordinates(coordinates);
-            if (cityToDelete != null) {
-                repository.delete(cityToDelete);
-            } else {
-                throw new SunriseSunsetException(MESSAGE_OF_DAY);
-            }
-        } catch (SunriseSunsetException e) {
-            System.out.println(e.getMessage());
+        Day cityToDelete = repository.findByCoordinates(coordinates);
+        if (cityToDelete != null) {
+            repository.delete(cityToDelete);
+        } else {
+            throw new SunriseSunsetException(MESSAGE_OF_DAY);
         }
     }
 
