@@ -1,17 +1,15 @@
 package sunposition.springday.service;
 
-import sunposition.springday.exception.SunriseSunsetException;
-import sunposition.springday.model.Day;
-
-import java.time.LocalDate;
-import java.util.List;
-
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
-
+import sunposition.springday.exception.SunriseSunsetException;
+import sunposition.springday.model.Day;
 import sunposition.springday.repository.InMemoryDayDAO;
+
+import java.time.LocalDate;
+import java.util.List;
 
 @Service
 @AllArgsConstructor
@@ -19,7 +17,6 @@ import sunposition.springday.repository.InMemoryDayDAO;
 @Transactional
 public class DayService {
     private final InMemoryDayDAO repository;
-
     public static final String MESSAGE_OF_DAY = "Sunrise/sunset not found";
 
     public List<Day> findAllSunriseSunset() {

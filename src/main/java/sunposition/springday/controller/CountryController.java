@@ -61,7 +61,12 @@ public class CountryController {
             Country updatedCountry = service.updateCountryByName(name, newName);
             return new ResponseEntity<>("Updated city: " + updatedCountry.getName(), HttpStatus.OK);
         } catch (SunriseSunsetException e) {
-            return new ResponseEntity<>(MESSAGE_COUNTRY_ALREADY_EXISTS, HttpStatus.BAD_REQUEST);
+            if (e.getMessage().equals(CountryService.MESSAGE_COUNTRY_ALREADY_EXISTS)) {
+                return new ResponseEntity<>(MESSAGE_COUNTRY_ALREADY_EXISTS, HttpStatus.BAD_REQUEST);
+            } else if (e.getMessage().equals(CountryService.MESSAGE_OF_COUNTRY)) {
+                return new ResponseEntity<>(MESSAGE_OF_COUNTRY, HttpStatus.NOT_FOUND);
+            }
         }
+        return null;
     }
 }
