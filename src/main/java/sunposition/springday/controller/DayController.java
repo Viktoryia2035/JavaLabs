@@ -72,18 +72,6 @@ public class DayController {
 
     @PutMapping("updateSunriseSunset")
     public Day updateSunriseSunset(@RequestParam String location, @RequestParam String coordinates, @RequestParam LocalDate dateOfSunriseSunset) {
-        try {
-            Day updatedDay = service.updateSunriseSunset(location, coordinates, dateOfSunriseSunset);
-            if (updatedDay == null) {
-                throw new SunriseSunsetException(MESSAGE_OF_DAY);
-            }
-            return updatedDay;
-        } catch (SunriseSunsetException e) {
-            if (e.getMessage().equals("Invalid coordinates or date")) {
-                throw new SunriseSunsetException(e.getMessage());
-            } else {
-                throw new SunriseSunsetException(MESSAGE_OF_DAY);
-            }
-        }
+        return service.updateSunriseSunset(location, coordinates, dateOfSunriseSunset);
     }
 }
