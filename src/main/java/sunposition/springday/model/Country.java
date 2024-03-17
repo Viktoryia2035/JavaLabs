@@ -21,8 +21,7 @@ public class Country {
     @Column(name = "capital")
     private String capital;
 
-    @OneToMany
-    @JoinColumn(name = "country_id")
+    @OneToMany(mappedBy = "country", cascade = CascadeType.ALL)
     private List<Day> days;
 
 }

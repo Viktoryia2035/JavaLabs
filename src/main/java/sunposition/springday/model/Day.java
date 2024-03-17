@@ -30,7 +30,7 @@ public class Day {
     @Column(name = "sunset")
     private LocalTime timeOfSunset;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "country_id")
     private Country country;
 }

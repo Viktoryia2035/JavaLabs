@@ -3,7 +3,6 @@ package sunposition.springday.service;
 
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
-import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 import sunposition.springday.exception.SunriseSunsetException;
 import sunposition.springday.model.Country;
@@ -14,7 +13,6 @@ import java.util.List;
 
 @Service
 @AllArgsConstructor
-@Primary
 @Transactional
 public class CountryService {
     private final InMemoryCountryDAO repositoryOfCountry;
