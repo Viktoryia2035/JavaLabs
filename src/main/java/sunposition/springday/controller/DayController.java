@@ -31,18 +31,33 @@ public class DayController {
     }
 
     @GetMapping("findByLocation")
-    public Day findByLocation(@RequestParam String location) {
-        return service.findByLocation(location);
+    public ResponseEntity<Object> findByLocation(@RequestParam String location) {
+        try {
+            Day day = service.findByLocation(location);
+            return new ResponseEntity<>(day, HttpStatus.OK);
+        } catch (SunriseSunsetException e) {
+            return new ResponseEntity<>(MESSAGE_OF_DAY, HttpStatus.NOT_FOUND);
+        }
     }
 
     @GetMapping("findByCoordinates")
-    public Day findByCoordinates(@RequestParam String coordinates) {
-        return service.findByCoordinates(coordinates);
+    public ResponseEntity<Object> findByCoordinates(@RequestParam String coordinates) {
+        try {
+            Day day = service.findByCoordinates(coordinates);
+            return new ResponseEntity<>(day, HttpStatus.OK);
+        } catch (SunriseSunsetException e) {
+            return new ResponseEntity<>(MESSAGE_OF_DAY, HttpStatus.NOT_FOUND);
+        }
     }
 
     @GetMapping("findByDateOfSunriseSunset")
-    public Day findByDateOfSunriseSunset(@RequestParam LocalDate dateOfSunriseSunset) {
-        return service.findByDateOfSunriseSunset(dateOfSunriseSunset);
+    public ResponseEntity<Object> findByDateOfSunriseSunset(@RequestParam LocalDate dateOfSunriseSunset) {
+        try {
+            Day day = service.findByDateOfSunriseSunset(dateOfSunriseSunset);
+            return new ResponseEntity<>(day, HttpStatus.OK);
+        } catch (SunriseSunsetException e) {
+            return new ResponseEntity<>(MESSAGE_OF_DAY, HttpStatus.NOT_FOUND);
+        }
     }
 
     @DeleteMapping("deleteByCoordinates")

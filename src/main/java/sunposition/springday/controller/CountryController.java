@@ -10,6 +10,7 @@ import sunposition.springday.service.CountryService;
 
 import java.util.List;
 
+import static sunposition.springday.service.CountryService.MESSAGE_COUNTRY_ALREADY_EXISTS;
 import static sunposition.springday.service.CountryService.MESSAGE_OF_COUNTRY;
 
 @RestController
@@ -25,13 +26,23 @@ public class CountryController {
     }
 
     @PostMapping("saveCountry")
-    public Country saveCountry(@RequestBody Country country) {
-        return service.saveCountry(country);
+    public ResponseEntity<Object> saveCountry(@RequestBody Country country) {
+        try {
+            Country savedCountry = service.saveCountry(country);
+            return new ResponseEntity<>(savedCountry, HttpStatus.CREATED);
+        } catch (SunriseSunsetException e) {
+            return new ResponseEntity<>(MESSAGE_COUNTRY_ALREADY_EXISTS, HttpStatus.BAD_REQUEST);
+        }
     }
 
     @GetMapping("findName")
-    public Country findByNameCountry(@RequestParam String name) {
-        return service.findByNameCountry(name);
+    public ResponseEntity<Object> findByNameCountry(@RequestParam String name) {
+        try {
+            Country country = service.findByNameCountry(name);
+            return new ResponseEntity<>(country, HttpStatus.OK);
+        } catch (SunriseSunsetException e) {
+            return new ResponseEntity<>(MESSAGE_OF_COUNTRY, HttpStatus.NOT_FOUND);
+        }
     }
 
     @DeleteMapping("deleteByName")
@@ -50,7 +61,7 @@ public class CountryController {
             Country updatedCountry = service.updateCountryByName(name, newName);
             return new ResponseEntity<>("Updated city: " + updatedCountry.getName(), HttpStatus.OK);
         } catch (SunriseSunsetException e) {
-            return new ResponseEntity<>(MESSAGE_OF_COUNTRY, HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(MESSAGE_COUNTRY_ALREADY_EXISTS, HttpStatus.BAD_REQUEST);
         }
     }
 }
