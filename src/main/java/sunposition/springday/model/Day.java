@@ -29,4 +29,8 @@ public class Day {
 
     @Column(name = "sunset")
     private LocalTime timeOfSunset;
+
+    @ManyToOne
+    @JoinColumn(name = "country_id")
+    private Country country;
 }
