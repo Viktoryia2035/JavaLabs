@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.Query;
 import sunposition.springday.model.Day;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 
 
@@ -18,4 +19,7 @@ public interface InMemoryDayDAO extends JpaRepository<Day, Long> {
 
     @Query("SELECT d FROM Day d JOIN d.country c WHERE c.name = :countryName AND d.weatherConditions = :weatherConditions")
     List<Day> findByCountryNameAndWeatherConditions(String countryName, String weatherConditions);
+
+    @Query("SELECT d FROM Day d JOIN d.country c WHERE c.capital = :capital AND d.timeOfSunrise = :timeOfSunrise")
+    List<Day> findByCapitalAndTimeOfSunrise(String capital, LocalTime timeOfSunrise);
 }

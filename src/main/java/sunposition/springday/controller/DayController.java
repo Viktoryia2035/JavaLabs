@@ -10,6 +10,7 @@ import sunposition.springday.model.Day;
 import sunposition.springday.service.DayService;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 
 @RestController
@@ -93,6 +94,19 @@ public class DayController {
             }
             DayDto updatedDayDto = DayMapper.toDto(updatedDay);
             return new ResponseEntity<>(updatedDayDto, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("/findByCapitalAndTimeOfSunrise")
+    public ResponseEntity<List<DayDto>> findByCapitalAndTimeOfSunrise(@RequestParam String capital, @RequestParam LocalTime timeOfSunrise) {
+        try {
+            List<DayDto> dayDtos = service.findByCapitalAndTimeOfSunrise(capital, timeOfSunrise);
+            if (dayDtos.isEmpty()) {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+            return new ResponseEntity<>(dayDtos, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }

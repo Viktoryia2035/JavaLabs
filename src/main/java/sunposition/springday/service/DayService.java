@@ -2,13 +2,17 @@ package sunposition.springday.service;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import sunposition.springday.dto.DayDto;
 import sunposition.springday.exception.SunriseSunsetException;
+import sunposition.springday.mapper.DayMapper;
 import sunposition.springday.model.Day;
 import sunposition.springday.repository.InMemoryDayDAO;
 
 import jakarta.transaction.Transactional;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -57,5 +61,14 @@ public class DayService {
         } else {
             throw new SunriseSunsetException(MESSAGE_OF_DAY);
         }
+    }
+
+    public List<DayDto> findByCapitalAndTimeOfSunrise(String capital, LocalTime timeOfSunrise) {
+        List<Day> days = repository.findByCapitalAndTimeOfSunrise(capital, timeOfSunrise);
+        List<DayDto> dayDtos = new ArrayList<>();
+        for (Day day : days) {
+            dayDtos.add(DayMapper.toDto(day));
+        }
+        return dayDtos;
     }
 }
