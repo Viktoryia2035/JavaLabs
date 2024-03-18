@@ -1,6 +1,6 @@
 package sunposition.springday.controller;
 
-import org.springframework.lang.Nullable;
+import org.jetbrains.annotations.Nullable;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
