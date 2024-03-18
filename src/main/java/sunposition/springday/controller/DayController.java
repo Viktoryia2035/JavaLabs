@@ -1,6 +1,5 @@
 package sunposition.springday.controller;
 
-import org.springframework.lang.Nullable;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -34,11 +33,8 @@ public class DayController {
     }
 
     @GetMapping("/findByLocation")
-    public ResponseEntity<DayDto> findByLocation(@RequestParam @Nullable String location) {
+    public ResponseEntity<DayDto> findByLocation(@RequestParam String location) {
         try {
-            if (location == null) {
-                return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
-            }
             Day day = service.findByLocation(location);
             DayDto dayDto = DayMapper.toDto(day);
             return new ResponseEntity<>(dayDto, HttpStatus.OK);
@@ -48,16 +44,11 @@ public class DayController {
     }
 
     @GetMapping("/findByCoordinates")
-    public ResponseEntity<DayDto> findByCoordinates(@RequestParam @Nullable String coordinates) {
+    public ResponseEntity<DayDto> findByCoordinates(@RequestParam String coordinates) {
         try {
-            if (coordinates == null) {
-                throw new IllegalArgumentException("Coordinates cannot be null");
-            }
             Day day = service.findByCoordinates(coordinates);
             DayDto dayDto = DayMapper.toDto(day);
             return new ResponseEntity<>(dayDto, HttpStatus.OK);
-        } catch (IllegalArgumentException e) {
-            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
@@ -65,7 +56,7 @@ public class DayController {
 
 
     @GetMapping("/findByDateOfSunriseSunset")
-    public ResponseEntity<DayDto> findByDateOfSunriseSunset(@RequestParam @Nullable LocalDate dateOfSunriseSunset) {
+    public ResponseEntity<DayDto> findByDateOfSunriseSunset(@RequestParam LocalDate dateOfSunriseSunset) {
         try {
             Day day = service.findByDateOfSunriseSunset(dateOfSunriseSunset);
             DayDto dayDto = DayMapper.toDto(day);
