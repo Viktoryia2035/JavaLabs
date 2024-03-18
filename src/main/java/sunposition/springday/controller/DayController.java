@@ -48,14 +48,16 @@ public class DayController {
 
 
     @GetMapping("/findByCoordinates")
-    public ResponseEntity<DayDto> findByCoordinates(@RequestParam(required = false) String coordinates) {
+    public ResponseEntity<DayDto> findByCoordinates(@RequestParam String coordinates) {
         try {
             if (coordinates == null) {
-                return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+                throw new IllegalArgumentException("Coordinates cannot be null");
             }
             Day day = service.findByCoordinates(coordinates);
             DayDto dayDto = DayMapper.toDto(day);
             return new ResponseEntity<>(dayDto, HttpStatus.OK);
+        } catch (IllegalArgumentException e) {
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
