@@ -13,6 +13,7 @@ import sunposition.springday.model.Day;
 import sunposition.springday.repository.InMemoryCountryDAO;
 import sunposition.springday.repository.InMemoryDayDAO;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -88,5 +89,14 @@ public class CountryService {
         } else {
             throw new SunriseSunsetException(MESSAGE_OF_COUNTRY);
         }
+    }
+
+    public List<DayDto> findByCountryNameAndWeatherConditions(String countryName, String weatherConditions) {
+        List<Day> days = repositoryOfDay.findByCountryNameAndWeatherConditions(countryName, weatherConditions);
+        List<DayDto> dayDtos = new ArrayList<>();
+        for (Day day : days) {
+            dayDtos.add(DayMapper.toDto(day));
+        }
+        return dayDtos;
     }
 }

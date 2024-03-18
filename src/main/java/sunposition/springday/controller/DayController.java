@@ -60,7 +60,6 @@ public class DayController {
         }
     }
 
-
     @GetMapping("/findByDateOfSunriseSunset")
     public ResponseEntity<DayDto> findByDateOfSunriseSunset(@RequestParam LocalDate dateOfSunriseSunset) {
         try {

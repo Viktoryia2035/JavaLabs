@@ -17,7 +17,8 @@ public class DayMapper {
                 day.getCoordinates(),
                 day.getDateOfSunriseSunset(),
                 day.getTimeOfSunrise(),
-                day.getTimeOfSunset()
+                day.getTimeOfSunset(),
+                day.getWeatherConditions()
         );
     }
 
@@ -32,6 +33,7 @@ public class DayMapper {
         day.setDateOfSunriseSunset(dayDto.getDateOfSunriseSunset());
         day.setTimeOfSunrise(dayDto.getTimeOfSunrise());
         day.setTimeOfSunset(dayDto.getTimeOfSunset());
+        day.setWeatherConditions(dayDto.getWeatherConditions());
         return day;
     }
 }

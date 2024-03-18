@@ -13,6 +13,8 @@ public class CountryMapper {
         countryDto.setId(country.getId());
         countryDto.setName(country.getName());
         countryDto.setCapital(country.getCapital());
+        countryDto.setPopulation(country.getPopulation());
+        countryDto.setLanguage(country.getLanguage());
         return countryDto;
     }
 
@@ -21,6 +23,8 @@ public class CountryMapper {
         country.setId(countryDto.getId());
         country.setName(countryDto.getName());
         country.setCapital(countryDto.getCapital());
+        country.setPopulation(countryDto.getPopulation());
+        country.setLanguage(countryDto.getLanguage());
         return country;
     }
 }

@@ -33,6 +33,9 @@ public class Day {
     @Column(name = "sunset")
     private LocalTime timeOfSunset;
 
+    @Column(name = "wea_condition")
+    private String weatherConditions;
+
     @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "country_id")

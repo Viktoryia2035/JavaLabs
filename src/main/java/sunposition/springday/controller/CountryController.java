@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import sunposition.springday.dto.CountryDto;
+import sunposition.springday.dto.DayDto;
 import sunposition.springday.exception.SunriseSunsetException;
 import sunposition.springday.service.CountryService;
 
@@ -59,6 +60,18 @@ public class CountryController {
             return new ResponseEntity<>(updatedCountryDto, HttpStatus.OK);
         } catch (SunriseSunsetException e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @GetMapping("/findByNameAndWeather")
+    public ResponseEntity<List<DayDto>> findByCountryNameAndWeatherConditions(@RequestParam String countryName, @RequestParam String weatherConditions) {
+        try {
+            List<DayDto> dayDtos = service.findByCountryNameAndWeatherConditions(countryName, weatherConditions);
+            return new ResponseEntity<>(dayDtos, HttpStatus.OK);
+        } catch (SunriseSunsetException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 }

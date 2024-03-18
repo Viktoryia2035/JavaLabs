@@ -23,7 +23,6 @@ public class DayService {
         return repository.findAll();
     }
 
-
     public Day saveSunriseSunset(Day day) {
         return repository.save(day);
     }

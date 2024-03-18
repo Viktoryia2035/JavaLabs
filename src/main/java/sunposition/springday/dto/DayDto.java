@@ -7,6 +7,7 @@ import java.time.LocalTime;
 
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 public class DayDto {
     private Long id;
     private String location;
@@ -14,4 +15,6 @@ public class DayDto {
     private LocalDate dateOfSunriseSunset;
     private LocalTime timeOfSunrise;
     private LocalTime timeOfSunset;
+    private String weatherConditions;
+
 }
