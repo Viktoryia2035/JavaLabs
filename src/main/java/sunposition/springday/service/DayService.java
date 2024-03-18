@@ -1,11 +1,12 @@
 package sunposition.springday.service;
 
-import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import sunposition.springday.exception.SunriseSunsetException;
 import sunposition.springday.model.Day;
 import sunposition.springday.repository.InMemoryDayDAO;
+
+import jakarta.transaction.Transactional;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -15,14 +16,28 @@ import java.util.List;
 @Transactional
 public class DayService {
     private final InMemoryDayDAO repository;
+
     public static final String MESSAGE_OF_DAY = "Sunrise/sunset not found";
 
     public List<Day> findAllSunriseSunset() {
         return repository.findAll();
     }
 
+
     public Day saveSunriseSunset(Day day) {
         return repository.save(day);
+    }
+
+    public Day findByLocation(String location) {
+        return repository.findByLocation(location);
+    }
+
+    public Day findByCoordinates(String coordinates) {
+        return repository.findByCoordinates(coordinates);
+    }
+
+    public Day findByDateOfSunriseSunset(LocalDate dateOfSunriseSunset) {
+        return repository.findByDateOfSunriseSunset(dateOfSunriseSunset);
     }
 
     public void deleteDayByCoordinates(String coordinates) {
@@ -32,21 +47,6 @@ public class DayService {
         } else {
             throw new SunriseSunsetException(MESSAGE_OF_DAY);
         }
-    }
-
-    public Day findByLocation(String location) {
-        repository.findByLocation(location);
-        return null;
-    }
-
-    public Day findByCoordinates(String coordinates) {
-        repository.findByCoordinates(coordinates);
-        return null;
-    }
-
-    public Day findByDateOfSunriseSunset(LocalDate dateOfSunriseSunset) {
-        repository.findByDateOfSunriseSunset(dateOfSunriseSunset);
-        return null;
     }
 
     public Day updateSunriseSunset(String location, String coordinates, LocalDate dateOfSunriseSunset) {

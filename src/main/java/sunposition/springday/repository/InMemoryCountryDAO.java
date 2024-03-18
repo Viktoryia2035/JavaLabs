@@ -6,7 +6,6 @@ import sunposition.springday.model.Country;
 
 
 @Repository
-
 public interface InMemoryCountryDAO extends JpaRepository<Country, Long> {
     Country findByName(String name);
 }

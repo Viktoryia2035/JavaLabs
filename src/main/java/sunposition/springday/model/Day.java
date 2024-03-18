@@ -1,13 +1,16 @@
 package sunposition.springday.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
 
 import jakarta.persistence.*;
+import lombok.NoArgsConstructor;
 
 @Data
+@NoArgsConstructor
 @Entity
 @Table(name = "day")
 public class Day {
@@ -30,7 +33,9 @@ public class Day {
     @Column(name = "sunset")
     private LocalTime timeOfSunset;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnore
+    @ManyToOne
     @JoinColumn(name = "country_id")
     private Country country;
+
 }

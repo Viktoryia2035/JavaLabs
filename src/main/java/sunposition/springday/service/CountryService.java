@@ -1,14 +1,19 @@
 package sunposition.springday.service;
 
-
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import sunposition.springday.dto.CountryDto;
+import sunposition.springday.dto.DayDto;
 import sunposition.springday.exception.SunriseSunsetException;
+import sunposition.springday.mapper.CountryMapper;
+import sunposition.springday.mapper.DayMapper;
 import sunposition.springday.model.Country;
+import sunposition.springday.model.Day;
 import sunposition.springday.repository.InMemoryCountryDAO;
 import sunposition.springday.repository.InMemoryDayDAO;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -21,33 +26,57 @@ public class CountryService {
     public static final String MESSAGE_OF_COUNTRY = "Country not found";
     public static final String MESSAGE_COUNTRY_ALREADY_EXISTS = "Country with the same name already exists";
 
-    public List<Country> findAll() {
-        return repositoryOfCountry.findAll();
-    }
-
-    public Country saveCountry(Country newCountry) {
-        if (repositoryOfCountry.findByName(newCountry.getName()) != null) {
-            throw new SunriseSunsetException(MESSAGE_COUNTRY_ALREADY_EXISTS);
+    public List<CountryDto> findAll() {
+        List<Country> countries = repositoryOfCountry.findAll();
+        List<CountryDto> countryDtos = new ArrayList<>();
+        for (Country country : countries) {
+            CountryDto countryDto = CountryMapper.toDto(country);
+            countryDtos.add(countryDto);
         }
-        repositoryOfDay.saveAll(newCountry.getDays());
-        return repositoryOfCountry.save(newCountry);
+        return countryDtos;
     }
 
-    public Country findByNameCountry(String name) {
-        return repositoryOfCountry.findByName(name);
+    public CountryDto saveCountry(CountryDto countryDto) {
+        Country country = CountryMapper.toEntity(countryDto);
+        Country savedCountry = repositoryOfCountry.saveAndFlush(country);
+        List<Day> days = new ArrayList<>();
+        for (DayDto dayDto : countryDto.getDays()) {
+            Day day = DayMapper.toEntity(dayDto);
+            day.setCountry(country);
+            days.add(day);
+        }
+        country.setDays(days);
+        List<DayDto> savedDaysDto = new ArrayList<>();
+        for (Day day : savedCountry.getDays()) {
+            savedDaysDto.add(DayMapper.toDto(day));
+        }
+        countryDto.setDays(savedDaysDto);
+        return CountryMapper.toDto(savedCountry);
     }
 
-    public void deleteCountryByName(String name) {
-        Country countryToDelete = repositoryOfCountry.findByName(name);
+    public CountryDto findByNameCountry(String name) {
+        Country country = repositoryOfCountry.findByName(name);
+        if (country == null) {
+            throw new SunriseSunsetException(MESSAGE_OF_COUNTRY);
+        }
+        return CountryMapper.toDto(country);
+    }
+
+    public void deleteCountryById(Long id) {
+        Country countryToDelete = repositoryOfCountry.findById(id)
+                .orElseThrow(() -> new SunriseSunsetException(MESSAGE_OF_COUNTRY));
         if (countryToDelete != null) {
-            repositoryOfDay.deleteAll(countryToDelete.getDays());
+            List<Day> daysToDelete = countryToDelete.getDays();
+            if (daysToDelete != null && !daysToDelete.isEmpty()) {
+                repositoryOfDay.deleteAll(daysToDelete);
+            }
             repositoryOfCountry.delete(countryToDelete);
         } else {
             throw new SunriseSunsetException(MESSAGE_OF_COUNTRY);
         }
     }
 
-    public Country updateCountryByName(String name, String newName) {
+    public CountryDto updateCountryByName(String name, String newName) {
         Country existingCountry = repositoryOfCountry.findByName(name);
         if (existingCountry != null) {
             if (repositoryOfCountry.findByName(newName) != null) {
@@ -55,10 +84,9 @@ public class CountryService {
             }
             existingCountry.setName(newName);
             repositoryOfCountry.save(existingCountry);
-            return existingCountry;
+            return CountryMapper.toDto(existingCountry);
         } else {
             throw new SunriseSunsetException(MESSAGE_OF_COUNTRY);
         }
     }
-
 }
