@@ -36,10 +36,13 @@ public class DayController {
     public ResponseEntity<DayDto> findByLocation(@RequestParam String location) {
         try {
             Day day = service.findByLocation(location);
+            if (day == null) {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
             DayDto dayDto = DayMapper.toDto(day);
             return new ResponseEntity<>(dayDto, HttpStatus.OK);
         } catch (Exception e) {
-            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -47,10 +50,13 @@ public class DayController {
     public ResponseEntity<DayDto> findByCoordinates(@RequestParam String coordinates) {
         try {
             Day day = service.findByCoordinates(coordinates);
+            if (day == null) {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
             DayDto dayDto = DayMapper.toDto(day);
             return new ResponseEntity<>(dayDto, HttpStatus.OK);
         } catch (Exception e) {
-            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -59,10 +65,13 @@ public class DayController {
     public ResponseEntity<DayDto> findByDateOfSunriseSunset(@RequestParam LocalDate dateOfSunriseSunset) {
         try {
             Day day = service.findByDateOfSunriseSunset(dateOfSunriseSunset);
+            if (day == null) {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
             DayDto dayDto = DayMapper.toDto(day);
             return new ResponseEntity<>(dayDto, HttpStatus.OK);
         } catch (Exception e) {
-            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -80,10 +89,13 @@ public class DayController {
     public ResponseEntity<DayDto> updateSunriseSunset(@RequestParam String location, @RequestParam String coordinates, @RequestParam LocalDate dateOfSunriseSunset) {
         try {
             Day updatedDay = service.updateSunriseSunset(location, coordinates, dateOfSunriseSunset);
+            if (updatedDay == null) {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
             DayDto updatedDayDto = DayMapper.toDto(updatedDay);
             return new ResponseEntity<>(updatedDayDto, HttpStatus.OK);
         } catch (Exception e) {
-            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 }
