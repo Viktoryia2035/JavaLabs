@@ -31,9 +31,10 @@ This project uses the following dependencies:
 ***
 
 ## HTTP requests
-+ GET localhost:8080/api/v2/country - show all saved data
++ GET localhost:8080/api/v2/country - show all saved contries
++ GET localhost:8080/api/v2/sunrise_sunset - show all saved days
 + POST localhost:8080/api/v2/country/saveCountry - save data
-+ DELETE localhost:8080/api/v2/country/deleteByName - delete data by name
++ DELETE localhost:8080/api/v2/country/deleteById - delete data by id
 + PATCH localhost:8080/api/v2/country/updateByName - updating the country name by its current name
 + PUT localhost:8080/api/v2/sunrise_sunset/updateSunriseSunset - sunrise and sunset time updates for a given location and date
 ***
