@@ -1,5 +1,6 @@
 package sunposition.springday.controller;
 
+import jakarta.annotation.Nullable;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -33,7 +34,7 @@ public class DayController {
     }
 
     @GetMapping("/findByLocation")
-    public ResponseEntity<DayDto> findByLocation(@RequestParam(required = false) String location) {
+    public ResponseEntity<DayDto> findByLocation(@RequestParam @Nullable String location) {
         try {
             if (location == null) {
                 return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
@@ -46,9 +47,8 @@ public class DayController {
         }
     }
 
-
     @GetMapping("/findByCoordinates")
-    public ResponseEntity<DayDto> findByCoordinates(@RequestParam String coordinates) {
+    public ResponseEntity<DayDto> findByCoordinates(@RequestParam @Nullable String coordinates) {
         try {
             if (coordinates == null) {
                 throw new IllegalArgumentException("Coordinates cannot be null");
@@ -65,7 +65,7 @@ public class DayController {
 
 
     @GetMapping("/findByDateOfSunriseSunset")
-    public ResponseEntity<DayDto> findByDateOfSunriseSunset(@RequestParam LocalDate dateOfSunriseSunset) {
+    public ResponseEntity<DayDto> findByDateOfSunriseSunset(@RequestParam @Nullable LocalDate dateOfSunriseSunset) {
         try {
             Day day = service.findByDateOfSunriseSunset(dateOfSunriseSunset);
             DayDto dayDto = DayMapper.toDto(day);
