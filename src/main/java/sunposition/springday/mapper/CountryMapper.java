@@ -5,6 +5,9 @@ import sunposition.springday.model.Country;
 
 public class CountryMapper {
 
+    private CountryMapper() {
+    }
+
     public static CountryDto toDto(Country country) {
         CountryDto countryDto = new CountryDto();
         countryDto.setId(country.getId());

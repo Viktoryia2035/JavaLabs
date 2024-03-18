@@ -4,6 +4,8 @@ import sunposition.springday.dto.DayDto;
 import sunposition.springday.model.Day;
 
 public class DayMapper {
+    private DayMapper() {
+    }
 
     public static DayDto toDto(Day day) {
         if (day == null) {
