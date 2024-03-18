@@ -33,8 +33,11 @@ public class DayController {
     }
 
     @GetMapping("/findByLocation")
-    public ResponseEntity<DayDto> findByLocation(@RequestParam String location) {
+    public ResponseEntity<DayDto> findByLocation(@RequestParam(required = false) String location) {
         try {
+            if (location == null) {
+                return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+            }
             Day day = service.findByLocation(location);
             DayDto dayDto = DayMapper.toDto(day);
             return new ResponseEntity<>(dayDto, HttpStatus.OK);
@@ -42,6 +45,7 @@ public class DayController {
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
     }
+
 
     @GetMapping("/findByCoordinates")
     public ResponseEntity<DayDto> findByCoordinates(@RequestParam String coordinates) {
