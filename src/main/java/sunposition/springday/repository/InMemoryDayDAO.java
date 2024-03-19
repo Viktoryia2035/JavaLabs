@@ -19,8 +19,8 @@ public interface InMemoryDayDAO extends JpaRepository<Day, Long> {
     Day findByDateOfSunriseSunset(LocalDate dateOfSunriseSunset);
 
     @Query("SELECT d FROM Day d JOIN d.country c WHERE c.name = :countryName AND d.weatherConditions = :weatherConditions")
-    List<Day> findByCountryNameAndWeatherConditions(@Param("name") String countryName, @Param("wea_condition") String weatherConditions);
+    List<Day> findByCountryNameAndWeatherConditions(String countryName, String weatherConditions);
 
     @Query("SELECT d FROM Day d JOIN d.country c WHERE c.capital = :capital AND d.timeOfSunrise = :timeOfSunrise")
-    List<Day> findByCapitalAndTimeOfSunrise(@Param("capital") String capital, @Param("sunrise") LocalTime timeOfSunrise);
+    List<Day> findByCapitalAndTimeOfSunrise(String capital, LocalTime timeOfSunrise);
 }
