@@ -6,7 +6,14 @@ import lombok.Data;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Column;
+import jakarta.persistence.Id;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Table;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.JoinColumn;
 import lombok.NoArgsConstructor;
 
 @Data
@@ -33,7 +40,7 @@ public class Day {
     @Column(name = "sunset")
     private LocalTime timeOfSunset;
 
-    @Column(name = "wea_condition")
+    @Column(name = "weather_conditions")
     private String weatherConditions;
 
     @JsonIgnore

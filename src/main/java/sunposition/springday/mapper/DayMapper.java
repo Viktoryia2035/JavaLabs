@@ -3,11 +3,12 @@ package sunposition.springday.mapper;
 import sunposition.springday.dto.DayDto;
 import sunposition.springday.model.Day;
 
-public class DayMapper {
+public final class DayMapper {
+
     private DayMapper() {
     }
 
-    public static DayDto toDto(Day day) {
+    public static DayDto toDto(final Day day) {
         if (day == null) {
             return null;
         }
@@ -22,7 +23,7 @@ public class DayMapper {
         );
     }
 
-    public static Day toEntity(DayDto dayDto) {
+    public static Day toEntity(final DayDto dayDto) {
         if (dayDto == null) {
             return null;
         }

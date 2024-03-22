@@ -3,12 +3,12 @@ package sunposition.springday.mapper;
 import sunposition.springday.dto.CountryDto;
 import sunposition.springday.model.Country;
 
-public class CountryMapper {
+public final class CountryMapper {
 
     private CountryMapper() {
     }
 
-    public static CountryDto toDto(Country country) {
+    public static CountryDto toDto(final Country country) {
         CountryDto countryDto = new CountryDto();
         countryDto.setId(country.getId());
         countryDto.setName(country.getName());
@@ -18,7 +18,7 @@ public class CountryMapper {
         return countryDto;
     }
 
-    public static Country toEntity(CountryDto countryDto) {
+    public static Country toEntity(final CountryDto countryDto) {
         Country country = new Country();
         country.setId(countryDto.getId());
         country.setName(countryDto.getName());

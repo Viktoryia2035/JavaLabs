@@ -1,9 +1,17 @@
 package sunposition.springday.model;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Column;
+import jakarta.persistence.Id;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Table;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.CascadeType;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,4 +39,18 @@ public class Country {
     @OneToMany(mappedBy = "country", cascade = CascadeType.ALL)
     private List<Day> days = new ArrayList<>();
 
+    public LocalTime getSunriseTime() {
+        if (days.isEmpty()) {
+            return null;
+        }
+
+        LocalTime earliestSunrise = LocalTime.MAX;
+        for (Day day : days) {
+            LocalTime sunriseTime = day.getTimeOfSunrise();
+            if (sunriseTime.isBefore(earliestSunrise)) {
+                earliestSunrise = sunriseTime;
+            }
+        }
+        return earliestSunrise;
+    }
 }

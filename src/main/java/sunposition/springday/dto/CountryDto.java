@@ -1,6 +1,8 @@
 package sunposition.springday.dto;
 
-import lombok.*;
+import lombok.Data;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
@@ -19,8 +21,7 @@ public class CountryDto {
         return days;
     }
 
-    public void setDays(List<DayDto> days) {
-        this.days = days;
+    public void setDays(final List<DayDto> newDays) {
+        days = newDays;
     }
-
 }
