@@ -22,11 +22,13 @@ public class DayService {
     private final Cache<String, DayDto> dayCache;
 
     public static final String MESSAGE_OF_DAY = "Sunrise/sunset not found";
+    private static final String LOCATION_PREFIX = "location_";
+    private static final String COORDINATES_PREFIX = "coordinates_";
 
     public List<Day> findAllSunriseSunset() {
         List<Day> allDays = repository.findAll();
         for (Day day : allDays) {
-            String cacheKey = "location_" + day.getLocation();
+            String cacheKey = LOCATION_PREFIX + day.getLocation();
             DayDto dayDto = DayMapper.toDto(day);
             dayCache.put(cacheKey, dayDto);
         }
@@ -35,14 +37,14 @@ public class DayService {
 
     public Day saveSunriseSunset(final Day day) {
         Day savedDay = repository.save(day);
-        String cacheKey = "location_" + savedDay.getLocation();
+        String cacheKey = LOCATION_PREFIX + savedDay.getLocation();
         DayDto dayDto = DayMapper.toDto(savedDay);
         dayCache.put(cacheKey, dayDto);
         return savedDay;
     }
 
     public Day findByLocation(final String location) {
-        String cacheKey = "location_" + location;
+        String cacheKey = LOCATION_PREFIX + location;
         DayDto cachedDay = dayCache.get(cacheKey);
         if (cachedDay != null) {
             return DayMapper.toEntity(cachedDay);
@@ -59,7 +61,7 @@ public class DayService {
     }
 
     public Day findByCoordinates(final String coordinates) {
-        String cacheKey = "coordinates_" + coordinates;
+        String cacheKey = COORDINATES_PREFIX + coordinates;
         DayDto cachedDay = dayCache.get(cacheKey);
         if (cachedDay != null) {
             return DayMapper.toEntity(cachedDay);
@@ -79,7 +81,7 @@ public class DayService {
         Day dayToDelete = repository.findByCoordinates(coordinates);
         if (dayToDelete != null) {
             repository.delete(dayToDelete);
-            dayCache.remove("coordinates_" + coordinates);
+            dayCache.remove(COORDINATES_PREFIX + coordinates);
         } else {
             throw new SunriseSunsetException(MESSAGE_OF_DAY);
         }
@@ -94,9 +96,9 @@ public class DayService {
             existingDay.setCoordinates(coordinates);
             existingDay.setDateOfSunriseSunset(dateOfSunriseSunset);
             Day updatedDay = repository.save(existingDay);
-            dayCache.remove("location_" + location);
+            dayCache.remove(LOCATION_PREFIX + location);
             dayCache.put(
-                    "coordinates_" + coordinates,
+                    COORDINATES_PREFIX + coordinates,
                     DayMapper.toDto(updatedDay)
             );
             dayCache.put(
