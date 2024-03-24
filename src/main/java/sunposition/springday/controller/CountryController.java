@@ -66,10 +66,9 @@ public class CountryController {
         return ResponseEntity.ok(updatedCountryDto);
     }
 
-
     @GetMapping("/findByNameAndWeather")
     public ResponseEntity<List<DayDto>> findByCountryNameAndWeatherConditions(@RequestParam final String countryName, @RequestParam final String weatherConditions) {
-        LOGGER.info("Finding days by country name and weather conditions: {}, {}", countryName, weatherConditions);
+        LOGGER.info("Finding days by country name and weather conditions");
         List<DayDto> dayDto = service.findByCountryNameAndWeatherConditions(countryName, weatherConditions);
         LOGGER.info("Found {} days", dayDto.size());
         return ResponseEntity.ok(dayDto);
