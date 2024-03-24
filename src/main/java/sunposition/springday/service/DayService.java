@@ -1,5 +1,6 @@
 package sunposition.springday.service;
 
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import sunposition.springday.cache.DataCache;
@@ -8,7 +9,6 @@ import sunposition.springday.exception.HttpErrorExceptions;
 import sunposition.springday.mapper.DayMapper;
 import sunposition.springday.model.Day;
 import sunposition.springday.repository.InMemoryDayDAO;
-import jakarta.transaction.Transactional;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -51,7 +51,8 @@ public class DayService {
         }
         Day day = repository.findByLocation(location);
         if (day == null) {
-            throw new HttpErrorExceptions.CustomNotFoundException(MESSAGE_OF_DAY);
+            throw new HttpErrorExceptions.
+                    CustomNotFoundException(MESSAGE_OF_DAY);
         }
         DayDto dayDto = DayMapper.toDto(day);
         dayCache.put(cacheKey, dayDto);
@@ -67,7 +68,8 @@ public class DayService {
         }
         Day day = repository.findByCoordinates(coordinates);
         if (day == null) {
-            throw new HttpErrorExceptions.CustomNotFoundException(MESSAGE_OF_DAY);
+            throw new HttpErrorExceptions.
+                    CustomNotFoundException(MESSAGE_OF_DAY);
         }
         DayDto dayDto = DayMapper.toDto(day);
         dayCache.put(cacheKey, dayDto);
@@ -82,7 +84,8 @@ public class DayService {
             dayCache.remove(COORDINATES_PREFIX + coordinates);
             dayCache.clear();
         } else {
-            throw new HttpErrorExceptions.CustomNotFoundException(MESSAGE_OF_DAY);
+            throw new HttpErrorExceptions.
+                    CustomNotFoundException(MESSAGE_OF_DAY);
         }
     }
 
@@ -107,7 +110,8 @@ public class DayService {
             dayCache.clear();
             return updatedDay;
         } else {
-            throw new HttpErrorExceptions.CustomNotFoundException(MESSAGE_OF_DAY);
+            throw new HttpErrorExceptions.
+                    CustomNotFoundException(MESSAGE_OF_DAY);
         }
     }
 }

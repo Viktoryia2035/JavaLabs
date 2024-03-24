@@ -11,7 +11,8 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 @ControllerAdvice
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
-    private static final Logger GLOBAL_EXCEPTION_HANDLER_LOGGER = LogManager.getLogger(GlobalExceptionHandler.class);
+    private static final Logger GLOBAL_EXCEPTION_HANDLER_LOGGER =
+            LogManager.getLogger(GlobalExceptionHandler.class);
 
 
     @ExceptionHandler(value = {
@@ -20,23 +21,32 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
             HttpErrorExceptions.CustomMethodNotAllowedException.class,
             HttpErrorExceptions.CustomServiceUnavailableException.class
     })
-    public ResponseEntity<Object> handleCustomExceptions(final RuntimeException ex) {
+    public ResponseEntity<Object> handleCustomExceptions(
+            final RuntimeException ex) {
         HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
         if (ex instanceof HttpErrorExceptions.CustomNotFoundException) {
             status = HttpStatus.NOT_FOUND;
-        } else if (ex instanceof HttpErrorExceptions.CustomBadRequestException) {
+        } else if (ex instanceof HttpErrorExceptions.
+                CustomBadRequestException) {
             status = HttpStatus.BAD_REQUEST;
-        } else if (ex instanceof HttpErrorExceptions.CustomMethodNotAllowedException) {
+        } else if (ex instanceof HttpErrorExceptions.
+                CustomMethodNotAllowedException) {
             status = HttpStatus.METHOD_NOT_ALLOWED;
-        } else if (ex instanceof HttpErrorExceptions.CustomServiceUnavailableException) {
+        } else if (ex instanceof HttpErrorExceptions.
+                CustomServiceUnavailableException) {
             status = HttpStatus.SERVICE_UNAVAILABLE;
-        } else if (ex instanceof HttpErrorExceptions.CustomInternalServerErrorException) {
-            GLOBAL_EXCEPTION_HANDLER_LOGGER.error("CustomInternalServerErrorException occurred: {}", ex.getMessage(), ex);
+        } else if (ex instanceof HttpErrorExceptions.
+                CustomInternalServerErrorException) {
+            GLOBAL_EXCEPTION_HANDLER_LOGGER.
+                    error("CustomInternalServerErrorException occurred: {}",
+                            ex.getMessage(), ex);
         }
 
-        GLOBAL_EXCEPTION_HANDLER_LOGGER.error("An error occurred: {}", ex.getMessage(), ex);
+        GLOBAL_EXCEPTION_HANDLER_LOGGER.
+                error("An error occurred: {}", ex.getMessage(), ex);
 
-        ErrorResponse errorResponse = new ErrorResponse(ex.getMessage(), status);
+        ErrorResponse errorResponse = new ErrorResponse(
+                ex.getMessage(), status);
         return new ResponseEntity<>(errorResponse, status);
     }
 

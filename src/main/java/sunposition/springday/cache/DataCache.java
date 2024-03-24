@@ -1,9 +1,9 @@
 package sunposition.springday.cache;
 
+import org.springframework.stereotype.Component;
+
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-
-import org.springframework.stereotype.Component;
 
 @Component
 public class DataCache {

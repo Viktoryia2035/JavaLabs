@@ -6,9 +6,10 @@ public class ErrorResponse {
     private String message;
     private HttpStatus status;
 
-    public ErrorResponse(String message, HttpStatus status) {
-        this.message = message;
-        this.status = status;
+    public ErrorResponse(
+            final String errorMessage, final HttpStatus errorStatus) {
+        this.message = errorMessage;
+        this.status = errorStatus;
     }
 
     public String getMessage() {

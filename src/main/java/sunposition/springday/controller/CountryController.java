@@ -30,15 +30,19 @@ public class CountryController {
     }
 
     @PostMapping("/saveCountry")
-    public ResponseEntity<CountryDto> saveCountry(@RequestBody final CountryDto countryDto) {
+    public ResponseEntity<CountryDto> saveCountry(
+            @RequestBody final CountryDto countryDto) {
         LOGGER.info("Saving country: {}", countryDto.getName());
         CountryDto savedCountryDto = service.saveCountry(countryDto);
-        LOGGER.info("Country saved successfully: {}", savedCountryDto.getName());
+        LOGGER.info(
+                "Country saved successfully: {}",
+                savedCountryDto.getName());
         return ResponseEntity.status(HttpStatus.CREATED).body(savedCountryDto);
     }
 
     @GetMapping("/findName")
-    public ResponseEntity<CountryDto> findByNameCountry(@RequestParam final String name) {
+    public ResponseEntity<CountryDto> findByNameCountry(
+            @RequestParam final String name) {
         LOGGER.info("Finding country by name");
         CountryDto countryDto = service.findByNameCountry(name);
         if (countryDto != null) {
@@ -51,7 +55,8 @@ public class CountryController {
 
 
     @DeleteMapping("/deleteById")
-    public ResponseEntity<String> deleteCountryById(@RequestParam final Long id) {
+    public ResponseEntity<String> deleteCountryById(
+            @RequestParam final Long id) {
         LOGGER.info("Deleting country by id: {}", id);
         service.deleteCountryById(id);
         LOGGER.info("Country deleted successfully: {}", id);
@@ -59,17 +64,25 @@ public class CountryController {
     }
 
     @PatchMapping("/updateByName")
-    public ResponseEntity<CountryDto> updateCountryByName(@RequestParam final String name, @RequestParam final String newName) {
+    public ResponseEntity<CountryDto> updateCountryByName(
+            @RequestParam final String name,
+            @RequestParam final String newName) {
         LOGGER.info("Updating country name");
-        CountryDto updatedCountryDto = service.updateCountryByName(name, newName);
-        LOGGER.info("Country updated successfully: {}", updatedCountryDto.getName());
+        CountryDto updatedCountryDto = service.
+                updateCountryByName(name, newName);
+        LOGGER.info("Country updated successfully: {}",
+                updatedCountryDto.getName());
         return ResponseEntity.ok(updatedCountryDto);
     }
 
     @GetMapping("/findByNameAndWeather")
-    public ResponseEntity<List<DayDto>> findByCountryNameAndWeatherConditions(@RequestParam final String countryName, @RequestParam final String weatherConditions) {
+    public ResponseEntity<List<DayDto>> findByCountryNameAndWeatherConditions(
+            @RequestParam final String countryName,
+            @RequestParam final String weatherConditions) {
         LOGGER.info("Finding days by country name and weather conditions");
-        List<DayDto> dayDto = service.findByCountryNameAndWeatherConditions(countryName, weatherConditions);
+        List<DayDto> dayDto = service.
+                findByCountryNameAndWeatherConditions(
+                        countryName, weatherConditions);
         LOGGER.info("Found {} days", dayDto.size());
         return ResponseEntity.ok(dayDto);
     }

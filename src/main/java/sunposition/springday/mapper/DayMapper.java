@@ -38,17 +38,17 @@ public final class DayMapper {
         return day;
     }
 
-    public static String toString(Day day) {
+    public static String toString(final Day day) {
         if (day == null) {
             return "Day{null}";
         }
-        return "Day{" +
-                "date=" + day.getDateOfSunriseSunset() +
-                ", location='" + day.getLocation() + '\'' +
-                ", coordinates='" + day.getCoordinates() + '\'' +
-                ", sunrise=" + day.getTimeOfSunrise() +
-                ", sunset=" + day.getTimeOfSunset() +
-                ", weatherConditions='" + day.getWeatherConditions() + '\'' +
-                '}';
+        return "Day{"
+                + "date=" + day.getDateOfSunriseSunset()
+                + ", location='" + day.getLocation() + '\''
+                + ", coordinates='" + day.getCoordinates() + '\''
+                + ", sunrise=" + day.getTimeOfSunrise()
+                + ", sunset=" + day.getTimeOfSunset()
+                + ", weatherConditions='" + day.getWeatherConditions() + '\''
+                + '}';
     }
 }

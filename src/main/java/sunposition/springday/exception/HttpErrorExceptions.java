@@ -1,36 +1,40 @@
 package sunposition.springday.exception;
 
-public class HttpErrorExceptions {
+public final class HttpErrorExceptions {
 
     private HttpErrorExceptions() {
     }
 
     public static class CustomNotFoundException extends RuntimeException {
-        public CustomNotFoundException(String message) {
+        public CustomNotFoundException(final String message) {
             super(message);
         }
     }
 
     public static class CustomBadRequestException extends RuntimeException {
-        public CustomBadRequestException(String message) {
+        public CustomBadRequestException(final String message) {
             super(message);
         }
     }
 
-    public static class CustomMethodNotAllowedException extends RuntimeException {
-        public CustomMethodNotAllowedException(String message) {
+    public static class CustomMethodNotAllowedException
+            extends RuntimeException {
+        public CustomMethodNotAllowedException(final String message) {
             super(message);
         }
     }
 
-    public static class CustomServiceUnavailableException extends RuntimeException {
-        public CustomServiceUnavailableException(String message) {
+    public static class CustomServiceUnavailableException
+            extends RuntimeException {
+        public CustomServiceUnavailableException(final String message) {
             super(message);
         }
     }
 
-    public static class CustomInternalServerErrorException extends RuntimeException {
-        public CustomInternalServerErrorException(String message, Throwable cause) {
+    public static class CustomInternalServerErrorException
+            extends RuntimeException {
+        public CustomInternalServerErrorException(
+                final String message, final Throwable cause) {
             super(message, cause);
         }
     }

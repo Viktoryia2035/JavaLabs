@@ -16,7 +16,8 @@ public class SwaggerConfig implements WebMvcConfigurer {
     public Docket api() {
         return new Docket(DocumentationType.SWAGGER_2)
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("sunposition.springday"))
+                .apis(RequestHandlerSelectors.basePackage(
+                        "sunposition.springday"))
                 .paths(PathSelectors.regex("/.*"))
                 .build()
                 .apiInfo(apiInfo());

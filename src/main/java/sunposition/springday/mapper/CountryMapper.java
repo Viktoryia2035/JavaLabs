@@ -2,7 +2,6 @@ package sunposition.springday.mapper;
 
 import sunposition.springday.dto.CountryDto;
 import sunposition.springday.model.Country;
-import sunposition.springday.model.Day;
 
 public final class CountryMapper {
 
@@ -29,17 +28,17 @@ public final class CountryMapper {
         return country;
     }
 
-    public static String toString(Country country) {
+    public static String toString(final Country country) {
         if (country == null) {
             return "Country{null}";
         }
         int daysCount = country.getDays().size();
-        return "Country{" +
-                "name='" + country.getName() + '\'' +
-                ", capital='" + country.getCapital() + '\'' +
-                ", population=" + country.getPopulation() +
-                ", language='" + country.getLanguage() + '\'' +
-                ", daysCount=" + daysCount +
-                '}';
+        return "Country{"
+                + "name='" + country.getName() + '\''
+                + ", capital='" + country.getCapital() + '\''
+                + ", population=" + country.getPopulation()
+                + ", language='" + country.getLanguage() + '\''
+                + ", daysCount=" + daysCount
+                + '}';
     }
 }
