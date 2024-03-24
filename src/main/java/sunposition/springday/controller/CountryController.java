@@ -60,11 +60,12 @@ public class CountryController {
 
     @PatchMapping("/updateByName")
     public ResponseEntity<CountryDto> updateCountryByName(@RequestParam final String name, @RequestParam final String newName) {
-        LOGGER.info("Updating country name from {} to {}", name, newName);
+        LOGGER.info("Updating country name");
         CountryDto updatedCountryDto = service.updateCountryByName(name, newName);
         LOGGER.info("Country updated successfully: {}", updatedCountryDto.getName());
         return ResponseEntity.ok(updatedCountryDto);
     }
+
 
     @GetMapping("/findByNameAndWeather")
     public ResponseEntity<List<DayDto>> findByCountryNameAndWeatherConditions(@RequestParam final String countryName, @RequestParam final String weatherConditions) {
