@@ -94,19 +94,20 @@ public class DayController {
             @RequestParam final String location,
             @RequestParam final String coordinates,
             @RequestParam final LocalDate dateOfSunriseSunset) {
-        LOGGER.info("Updating sunrise and sunset time for location: {}, coordinates: {}, date: {}", location, coordinates, dateOfSunriseSunset);
+        LOGGER.info("Updating sunrise and sunset time");
         try {
             Day updatedDay = service.updateSunriseSunset(location, coordinates, dateOfSunriseSunset);
             if (updatedDay == null) {
-                LOGGER.error("Sunrise and sunset time not updated for location: {}, coordinates: {}, date: {}", location, coordinates, dateOfSunriseSunset);
+                LOGGER.error("Sunrise and sunset time not updated");
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             }
             DayDto updatedDayDto = DayMapper.toDto(updatedDay);
-            LOGGER.info("Sunrise and sunset time updated successfully for location: {}, coordinates: {}, date: {}", location, coordinates, dateOfSunriseSunset);
+            LOGGER.info("Sunrise and sunset time updated successfully");
             return new ResponseEntity<>(updatedDayDto, HttpStatus.OK);
         } catch (Exception e) {
-            LOGGER.error("Error updating sunrise and sunset time for location: {}, coordinates: {}, date: {}", location, coordinates, dateOfSunriseSunset, e);
+            LOGGER.error("Error updating sunrise and sunset time", e);
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
 }
