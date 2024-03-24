@@ -40,10 +40,8 @@ public class DayController {
         return new ResponseEntity<>(savedDayDto, HttpStatus.CREATED);
     }
 
-
     @GetMapping("/findByLocation")
     public ResponseEntity<DayDto> findByLocation(@RequestParam final String location) {
-        // Log a message indicating the operation without logging the actual data
         LOGGER.info("Finding sunrise and sunset time by location");
         try {
             Day day = service.findByLocation(location);
@@ -60,34 +58,33 @@ public class DayController {
         }
     }
 
-
     @GetMapping("/findByCoordinates")
     public ResponseEntity<DayDto> findByCoordinates(@RequestParam final String coordinates) {
-        LOGGER.info("Finding sunrise and sunset time by coordinates: {}", coordinates);
+        LOGGER.info("Finding sunrise and sunset time by coordinates");
         try {
             Day day = service.findByCoordinates(coordinates);
             if (day == null) {
-                LOGGER.error("Sunrise and sunset time not found for coordinates: {}", coordinates);
+                LOGGER.error("Sunrise and sunset time not found for coordinates");
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             }
             DayDto dayDto = DayMapper.toDto(day);
-            LOGGER.info("Sunrise and sunset time found for coordinates: {}", coordinates);
+            LOGGER.info("Sunrise and sunset time found for coordinates");
             return new ResponseEntity<>(dayDto, HttpStatus.OK);
         } catch (Exception e) {
-            LOGGER.error("Error finding sunrise and sunset time by coordinates: {}", coordinates, e);
+            LOGGER.error("Error finding sunrise and sunset time by coordinates", e);
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
     @DeleteMapping("/deleteByCoordinates")
     public ResponseEntity<String> deleteCityByCoordinates(@RequestParam final String coordinates) {
-        LOGGER.info("Deleting city by coordinates: {}", coordinates);
+        LOGGER.info("Deleting city by coordinates");
         try {
             service.deleteDayByCoordinates(coordinates);
-            LOGGER.info("City deleted successfully by coordinates: {}", coordinates);
+            LOGGER.info("City deleted successfully by coordinates");
             return new ResponseEntity<>("The deletion was successful", HttpStatus.OK);
         } catch (Exception e) {
-            LOGGER.error("Error deleting city by coordinates: {}", coordinates, e);
+            LOGGER.error("Error deleting city by coordinates", e);
             return new ResponseEntity<>("Error deleting city", HttpStatus.NOT_FOUND);
         }
     }
