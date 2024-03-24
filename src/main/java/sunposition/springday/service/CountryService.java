@@ -141,10 +141,8 @@ public class CountryService {
         try {
             String cacheKey = countryName + "_" + weatherConditions;
             Object cachedObject = dayCache.get(cacheKey);
-            if (cachedObject instanceof List<?> list) {
-                if (!list.isEmpty() && list.get(0) instanceof DayDto) {
-                    return (List<DayDto>) list;
-                }
+            if (cachedObject instanceof List<?> list && !list.isEmpty() && list.get(0) instanceof DayDto) {
+                return (List<DayDto>) list;
             }
             List<Day> days = repositoryOfDay.findByCountryNameAndWeatherConditions(countryName, weatherConditions);
             List<DayDto> dayDtos = new ArrayList<>();
@@ -157,4 +155,5 @@ public class CountryService {
             throw new HttpErrorExceptions.CustomInternalServerErrorException("An error occurred while fetching days by country name and weather conditions", e);
         }
     }
+
 }
