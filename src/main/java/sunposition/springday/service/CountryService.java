@@ -155,5 +155,4 @@ public class CountryService {
             throw new HttpErrorExceptions.CustomInternalServerErrorException("An error occurred while fetching days by country name and weather conditions", e);
         }
     }
-
 }

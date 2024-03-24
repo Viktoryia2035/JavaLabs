@@ -62,8 +62,7 @@ public class DayService {
     public Day findByCoordinates(final String coordinates) {
         String cacheKey = COORDINATES_PREFIX + coordinates;
         Object cachedObject = dayCache.get(cacheKey);
-        if (cachedObject != null && cachedObject instanceof DayDto) {
-            DayDto cachedDay = (DayDto) cachedObject;
+        if (cachedObject instanceof DayDto cachedDay) {
             return DayMapper.toEntity(cachedDay);
         }
         Day day = repository.findByCoordinates(coordinates);
