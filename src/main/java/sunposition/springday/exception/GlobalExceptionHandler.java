@@ -11,7 +11,8 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 @ControllerAdvice
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
-    private static final Logger LOGGER = LogManager.getLogger(GlobalExceptionHandler.class);
+    private static final Logger GLOBAL_EXCEPTION_HANDLER_LOGGER = LogManager.getLogger(GlobalExceptionHandler.class);
+
 
     @ExceptionHandler(value = {
             HttpErrorExceptions.CustomNotFoundException.class,
@@ -33,7 +34,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
             status = HttpStatus.INTERNAL_SERVER_ERROR;
         }
 
-        LOGGER.error("An error occurred: {}", ex.getMessage(), ex);
+        GLOBAL_EXCEPTION_HANDLER_LOGGER.error("An error occurred: {}", ex.getMessage(), ex);
 
         ErrorResponse errorResponse = new ErrorResponse(ex.getMessage(), status);
         return new ResponseEntity<>(errorResponse, status);
