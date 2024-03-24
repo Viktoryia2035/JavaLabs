@@ -31,7 +31,6 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         } else if (ex instanceof HttpErrorExceptions.CustomServiceUnavailableException) {
             status = HttpStatus.SERVICE_UNAVAILABLE;
         } else if (ex instanceof HttpErrorExceptions.CustomInternalServerErrorException) {
-            status = HttpStatus.INTERNAL_SERVER_ERROR;
         }
 
         GLOBAL_EXCEPTION_HANDLER_LOGGER.error("An error occurred: {}", ex.getMessage(), ex);
