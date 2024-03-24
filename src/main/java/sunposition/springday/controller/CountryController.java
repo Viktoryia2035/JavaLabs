@@ -39,11 +39,16 @@ public class CountryController {
 
     @GetMapping("/findName")
     public ResponseEntity<CountryDto> findByNameCountry(@RequestParam final String name) {
-        LOGGER.info("Finding country by name: {}", name);
+        LOGGER.info("Finding country by name");
         CountryDto countryDto = service.findByNameCountry(name);
-        LOGGER.info("Country found: {}", countryDto.getName());
+        if (countryDto != null) {
+            LOGGER.info("Country found");
+        } else {
+            LOGGER.info("Country not found");
+        }
         return ResponseEntity.ok(countryDto);
     }
+
 
     @DeleteMapping("/deleteById")
     public ResponseEntity<String> deleteCountryById(@RequestParam final Long id) {
