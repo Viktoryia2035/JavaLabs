@@ -141,8 +141,7 @@ public class CountryService {
         try {
             String cacheKey = countryName + "_" + weatherConditions;
             Object cachedObject = dayCache.get(cacheKey);
-            if (cachedObject != null && cachedObject instanceof List<?>) {
-                List<?> list = (List<?>) cachedObject;
+            if (cachedObject instanceof List<?> list) {
                 if (!list.isEmpty() && list.get(0) instanceof DayDto) {
                     return (List<DayDto>) list;
                 }
@@ -158,5 +157,4 @@ public class CountryService {
             throw new HttpErrorExceptions.CustomInternalServerErrorException("An error occurred while fetching days by country name and weather conditions", e);
         }
     }
-
 }
