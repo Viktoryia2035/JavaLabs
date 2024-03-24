@@ -46,8 +46,7 @@ public class DayService {
     public Day findByLocation(final String location) {
         String cacheKey = LOCATION_PREFIX + location;
         Object cachedObject = dayCache.get(cacheKey);
-        if (cachedObject != null && cachedObject instanceof DayDto) {
-            DayDto cachedDay = (DayDto) cachedObject;
+        if (cachedObject instanceof DayDto cachedDay) {
             return DayMapper.toEntity(cachedDay);
         }
         Day day = repository.findByLocation(location);
