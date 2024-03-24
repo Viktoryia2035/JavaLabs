@@ -6,7 +6,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import org.springframework.stereotype.Component;
 
 @Component
-public class Cache<String, Object> {
+public class DataCache<String, Object> {
     private final Map<String, Object> hashMap = new ConcurrentHashMap<>();
     private static final int MAX_SIZE = 100;
 

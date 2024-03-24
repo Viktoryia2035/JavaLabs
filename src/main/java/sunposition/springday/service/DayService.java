@@ -2,7 +2,7 @@ package sunposition.springday.service;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-import sunposition.springday.cache.Cache;
+import sunposition.springday.cache.DataCache;
 import sunposition.springday.dto.DayDto;
 import sunposition.springday.exception.HttpErrorExceptions;
 import sunposition.springday.mapper.DayMapper;
@@ -18,7 +18,7 @@ import java.util.List;
 @Transactional
 public class DayService {
     private final InMemoryDayDAO repository;
-    private final Cache<String, DayDto> dayCache;
+    private final DataCache<String, DayDto> dayCache;
 
     public static final String MESSAGE_OF_DAY = "Sunrise/sunset not found";
     private static final String LOCATION_PREFIX = "location_";

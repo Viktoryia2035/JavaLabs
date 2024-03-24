@@ -3,7 +3,7 @@ package sunposition.springday.service;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-import sunposition.springday.cache.Cache;
+import sunposition.springday.cache.DataCache;
 import sunposition.springday.dto.CountryDto;
 import sunposition.springday.dto.DayDto;
 import sunposition.springday.exception.HttpErrorExceptions;
@@ -23,8 +23,8 @@ import java.util.List;
 public class CountryService {
     private final InMemoryCountryDAO repositoryOfCountry;
     private final InMemoryDayDAO repositoryOfDay;
-    private final Cache<String, CountryDto> countryCache;
-    private final Cache<String, List<DayDto>> dayCache;
+    private final DataCache<String, CountryDto> countryCache;
+    private final DataCache<String, List<DayDto>> dayCache;
 
     public static final String MESSAGE_OF_COUNTRY = "Country not found";
     public static final String MESSAGE_COUNTRY_ALREADY_EXISTS = "Country with the same name already exists";
