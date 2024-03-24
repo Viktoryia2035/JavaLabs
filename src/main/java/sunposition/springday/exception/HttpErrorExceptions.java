@@ -2,6 +2,9 @@ package sunposition.springday.exception;
 
 public class HttpErrorExceptions {
 
+    private HttpErrorExceptions() {
+    }
+
     public static class CustomNotFoundException extends RuntimeException {
         public CustomNotFoundException(String message) {
             super(message);
