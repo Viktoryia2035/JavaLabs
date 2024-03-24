@@ -81,8 +81,8 @@ public class CountryService {
     public CountryDto findByNameCountry(final String name) {
         try {
             Object cachedObject = countryCache.get(name);
-            if (cachedObject != null && cachedObject instanceof CountryDto) {
-                return (CountryDto) cachedObject;
+            if (cachedObject instanceof CountryDto countryDto) {
+                return countryDto;
             }
             Country country = repositoryOfCountry.findByName(name);
             if (country == null) {
