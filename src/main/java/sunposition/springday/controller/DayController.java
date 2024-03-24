@@ -32,7 +32,7 @@ public class DayController {
 
     @PostMapping("/saveSunriseSunset")
     public ResponseEntity<DayDto> saveSunriseSunset(@RequestBody final DayDto dayDto) {
-        LOGGER.info("Saving sunrise and sunset time: {}", dayDto.getDate());
+        LOGGER.info("Saving sunrise and sunset time");
         Day day = DayMapper.toEntity(dayDto);
         Day savedDay = service.saveSunriseSunset(day);
         DayDto savedDayDto = DayMapper.toDto(savedDay);
@@ -40,23 +40,26 @@ public class DayController {
         return new ResponseEntity<>(savedDayDto, HttpStatus.CREATED);
     }
 
+
     @GetMapping("/findByLocation")
     public ResponseEntity<DayDto> findByLocation(@RequestParam final String location) {
-        LOGGER.info("Finding sunrise and sunset time by location: {}", location);
+        // Log a message indicating the operation without logging the actual data
+        LOGGER.info("Finding sunrise and sunset time by location");
         try {
             Day day = service.findByLocation(location);
             if (day == null) {
-                LOGGER.error("Sunrise and sunset time not found for location: {}", location);
+                LOGGER.error("Sunrise and sunset time not found for location");
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             }
             DayDto dayDto = DayMapper.toDto(day);
-            LOGGER.info("Sunrise and sunset time found for location: {}", location);
+            LOGGER.info("Sunrise and sunset time found for location");
             return new ResponseEntity<>(dayDto, HttpStatus.OK);
         } catch (Exception e) {
-            LOGGER.error("Error finding sunrise and sunset time by location: {}", location, e);
+            LOGGER.error("Error finding sunrise and sunset time by location", e);
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
 
     @GetMapping("/findByCoordinates")
     public ResponseEntity<DayDto> findByCoordinates(@RequestParam final String coordinates) {
