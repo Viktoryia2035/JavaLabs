@@ -47,5 +47,4 @@ public class Day {
     @ManyToOne
     @JoinColumn(name = "country_id")
     private Country country;
-
 }

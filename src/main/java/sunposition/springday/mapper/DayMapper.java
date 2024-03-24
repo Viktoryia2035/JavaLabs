@@ -37,4 +37,11 @@ public final class DayMapper {
         day.setWeatherConditions(dayDto.getWeatherConditions());
         return day;
     }
+
+    public static String toString(Day day) {
+        return "Day{" +
+                "date=" + day.getDateOfSunriseSunset() +
+                ", country=" + day.getCountry().getName() +
+                '}';
+    }
 }

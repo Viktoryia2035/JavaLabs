@@ -4,11 +4,10 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import sunposition.springday.cache.Cache;
 import sunposition.springday.dto.DayDto;
-import sunposition.springday.exception.SunriseSunsetException;
+import sunposition.springday.exception.HttpErrorExceptions;
 import sunposition.springday.mapper.DayMapper;
 import sunposition.springday.model.Day;
 import sunposition.springday.repository.InMemoryDayDAO;
-
 import jakarta.transaction.Transactional;
 
 import java.time.LocalDate;
@@ -40,6 +39,7 @@ public class DayService {
         String cacheKey = LOCATION_PREFIX + savedDay.getLocation();
         DayDto dayDto = DayMapper.toDto(savedDay);
         dayCache.put(cacheKey, dayDto);
+        dayCache.clear();
         return savedDay;
     }
 
@@ -49,12 +49,10 @@ public class DayService {
         if (cachedDay != null) {
             return DayMapper.toEntity(cachedDay);
         }
-
         Day day = repository.findByLocation(location);
         if (day == null) {
-            throw new SunriseSunsetException(MESSAGE_OF_DAY);
+            throw new HttpErrorExceptions.CustomNotFoundException(MESSAGE_OF_DAY);
         }
-
         DayDto dayDto = DayMapper.toDto(day);
         dayCache.put(cacheKey, dayDto);
         return day;
@@ -66,12 +64,10 @@ public class DayService {
         if (cachedDay != null) {
             return DayMapper.toEntity(cachedDay);
         }
-
         Day day = repository.findByCoordinates(coordinates);
         if (day == null) {
-            throw new SunriseSunsetException(MESSAGE_OF_DAY);
+            throw new HttpErrorExceptions.CustomNotFoundException(MESSAGE_OF_DAY);
         }
-
         DayDto dayDto = DayMapper.toDto(day);
         dayCache.put(cacheKey, dayDto);
         return day;
@@ -82,8 +78,9 @@ public class DayService {
         if (dayToDelete != null) {
             repository.delete(dayToDelete);
             dayCache.remove(COORDINATES_PREFIX + coordinates);
+            dayCache.clear();
         } else {
-            throw new SunriseSunsetException(MESSAGE_OF_DAY);
+            throw new HttpErrorExceptions.CustomNotFoundException(MESSAGE_OF_DAY);
         }
     }
 
@@ -105,9 +102,10 @@ public class DayService {
                     "date_" + dateOfSunriseSunset.toString(),
                     DayMapper.toDto(updatedDay)
             );
+            dayCache.clear();
             return updatedDay;
         } else {
-            throw new SunriseSunsetException(MESSAGE_OF_DAY);
+            throw new HttpErrorExceptions.CustomNotFoundException(MESSAGE_OF_DAY);
         }
     }
 }

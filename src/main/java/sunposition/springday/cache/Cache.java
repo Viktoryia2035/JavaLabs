@@ -6,37 +6,33 @@ import java.util.concurrent.ConcurrentHashMap;
 import org.springframework.stereotype.Component;
 
 @Component
-public class Cache<K, V> {
-    private final Map<K, V> cacheMap = new ConcurrentHashMap<>();
+public class Cache<String, Object> {
+    private final Map<String, Object> hashMap = new ConcurrentHashMap<>();
     private static final int MAX_SIZE = 100;
 
-    public void put(final K key, final V value) {
-        cacheMap.put(key, value);
-        if (cacheMap.size() > MAX_SIZE) {
+    public void put(final String key, final Object value) {
+        hashMap.put(key, value);
+        if (hashMap.size() > MAX_SIZE) {
             removeOldestEntry();
         }
     }
 
-    public V get(final K key) {
-        return cacheMap.get(key);
+    public Object get(final String key) {
+        return hashMap.get(key);
     }
 
-    public void remove(final K key) {
-        cacheMap.remove(key);
-    }
-
-    public boolean containsKey(final K key) {
-        return cacheMap.containsKey(key);
+    public void remove(final String key) {
+        hashMap.remove(key);
     }
 
     public void clear() {
-        cacheMap.clear();
+        hashMap.clear();
     }
 
     private void removeOldestEntry() {
-        if (!cacheMap.isEmpty()) {
-            K oldestKey = cacheMap.keySet().iterator().next();
-            cacheMap.remove(oldestKey);
+        if (!hashMap.isEmpty()) {
+            String oldestKey = hashMap.keySet().iterator().next();
+            hashMap.remove(oldestKey);
         }
     }
 }
