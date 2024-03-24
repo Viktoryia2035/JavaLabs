@@ -18,7 +18,7 @@ import java.util.List;
 @Transactional
 public class DayService {
     private final InMemoryDayDAO repository;
-    private final DataCache<String, DayDto> dayCache;
+    private final DataCache dayCache;
 
     public static final String MESSAGE_OF_DAY = "Sunrise/sunset not found";
     private static final String LOCATION_PREFIX = "location_";
@@ -45,8 +45,9 @@ public class DayService {
 
     public Day findByLocation(final String location) {
         String cacheKey = LOCATION_PREFIX + location;
-        DayDto cachedDay = dayCache.get(cacheKey);
-        if (cachedDay != null) {
+        Object cachedObject = dayCache.get(cacheKey);
+        if (cachedObject != null && cachedObject instanceof DayDto) {
+            DayDto cachedDay = (DayDto) cachedObject;
             return DayMapper.toEntity(cachedDay);
         }
         Day day = repository.findByLocation(location);
@@ -58,10 +59,12 @@ public class DayService {
         return day;
     }
 
+
     public Day findByCoordinates(final String coordinates) {
         String cacheKey = COORDINATES_PREFIX + coordinates;
-        DayDto cachedDay = dayCache.get(cacheKey);
-        if (cachedDay != null) {
+        Object cachedObject = dayCache.get(cacheKey);
+        if (cachedObject != null && cachedObject instanceof DayDto) {
+            DayDto cachedDay = (DayDto) cachedObject;
             return DayMapper.toEntity(cachedDay);
         }
         Day day = repository.findByCoordinates(coordinates);
@@ -72,6 +75,7 @@ public class DayService {
         dayCache.put(cacheKey, dayDto);
         return day;
     }
+
 
     public void deleteDayByCoordinates(final String coordinates) {
         Day dayToDelete = repository.findByCoordinates(coordinates);

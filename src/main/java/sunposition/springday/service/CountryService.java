@@ -23,8 +23,8 @@ import java.util.List;
 public class CountryService {
     private final InMemoryCountryDAO repositoryOfCountry;
     private final InMemoryDayDAO repositoryOfDay;
-    private final DataCache<String, CountryDto> countryCache;
-    private final DataCache<String, List<DayDto>> dayCache;
+    private final DataCache countryCache;
+    private final DataCache dayCache;
 
     public static final String MESSAGE_OF_COUNTRY = "Country not found";
     public static final String MESSAGE_COUNTRY_ALREADY_EXISTS = "Country with the same name already exists";
@@ -80,9 +80,9 @@ public class CountryService {
 
     public CountryDto findByNameCountry(final String name) {
         try {
-            CountryDto cachedCountry = countryCache.get(name);
-            if (cachedCountry != null) {
-                return cachedCountry;
+            Object cachedObject = countryCache.get(name);
+            if (cachedObject != null && cachedObject instanceof CountryDto) {
+                return (CountryDto) cachedObject;
             }
             Country country = repositoryOfCountry.findByName(name);
             if (country == null) {
@@ -95,6 +95,7 @@ public class CountryService {
             throw new HttpErrorExceptions.CustomInternalServerErrorException("An error occurred while fetching the country by name", e);
         }
     }
+
 
     public void deleteCountryById(final Long id) {
         try {
@@ -139,9 +140,12 @@ public class CountryService {
     public List<DayDto> findByCountryNameAndWeatherConditions(final String countryName, final String weatherConditions) {
         try {
             String cacheKey = countryName + "_" + weatherConditions;
-            List<DayDto> cachedDays = dayCache.get(cacheKey);
-            if (cachedDays != null) {
-                return cachedDays;
+            Object cachedObject = dayCache.get(cacheKey);
+            if (cachedObject != null && cachedObject instanceof List<?>) {
+                List<?> list = (List<?>) cachedObject;
+                if (!list.isEmpty() && list.get(0) instanceof DayDto) {
+                    return (List<DayDto>) list;
+                }
             }
             List<Day> days = repositoryOfDay.findByCountryNameAndWeatherConditions(countryName, weatherConditions);
             List<DayDto> dayDtos = new ArrayList<>();
@@ -154,4 +158,5 @@ public class CountryService {
             throw new HttpErrorExceptions.CustomInternalServerErrorException("An error occurred while fetching days by country name and weather conditions", e);
         }
     }
+
 }
