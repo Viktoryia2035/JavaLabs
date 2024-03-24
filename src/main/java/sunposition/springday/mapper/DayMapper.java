@@ -39,9 +39,16 @@ public final class DayMapper {
     }
 
     public static String toString(Day day) {
+        if (day == null) {
+            return "Day{null}";
+        }
         return "Day{" +
                 "date=" + day.getDateOfSunriseSunset() +
-                ", country=" + day.getCountry().getName() +
+                ", location='" + day.getLocation() + '\'' +
+                ", coordinates='" + day.getCoordinates() + '\'' +
+                ", sunrise=" + day.getTimeOfSunrise() +
+                ", sunset=" + day.getTimeOfSunset() +
+                ", weatherConditions='" + day.getWeatherConditions() + '\'' +
                 '}';
     }
 }

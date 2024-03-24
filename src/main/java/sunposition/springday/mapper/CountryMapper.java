@@ -30,17 +30,16 @@ public final class CountryMapper {
     }
 
     public static String toString(Country country) {
-        StringBuilder daysString = new StringBuilder();
-        for (Day day : country.getDays()) {
-            daysString.append(DayMapper.toString(day)).append(", ");
+        if (country == null) {
+            return "Country{null}";
         }
-        if (daysString.length() > 0) {
-            daysString.setLength(daysString.length() - 2);
-        }
-
+        int daysCount = country.getDays().size();
         return "Country{" +
                 "name='" + country.getName() + '\'' +
-                ", days=" + daysString.toString() +
+                ", capital='" + country.getCapital() + '\'' +
+                ", population=" + country.getPopulation() +
+                ", language='" + country.getLanguage() + '\'' +
+                ", daysCount=" + daysCount +
                 '}';
     }
 }
