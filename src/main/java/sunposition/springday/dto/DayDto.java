@@ -1,5 +1,6 @@
 package sunposition.springday.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -11,6 +12,7 @@ import java.time.LocalTime;
 @AllArgsConstructor
 @NoArgsConstructor
 public class DayDto {
+    @JsonIgnore
     private Long id;
     private String location;
     private String coordinates;
