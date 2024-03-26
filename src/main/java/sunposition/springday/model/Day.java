@@ -47,4 +47,17 @@ public class Day {
     @ManyToOne
     @JoinColumn(name = "country_id")
     private Country country;
+
+    @Override
+    public String toString() {
+        return "Day{"
+                + "id=" + id
+                + ", location='" + location + '\''
+                + ", coordinates='" + coordinates + '\''
+                + ", dateOfSunriseSunset=" + dateOfSunriseSunset
+                + ", timeOfSunrise=" + timeOfSunrise
+                + ", timeOfSunset=" + timeOfSunset
+                + ", weatherConditions='" + weatherConditions + '\''
+                + '}';
+    }
 }

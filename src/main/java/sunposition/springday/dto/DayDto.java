@@ -1,10 +1,10 @@
 package sunposition.springday.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 import java.time.LocalDate;
 import java.time.LocalTime;
 
@@ -14,9 +14,13 @@ import java.time.LocalTime;
 public class DayDto {
     @JsonIgnore
     private Long id;
+
     private String location;
     private String coordinates;
+
+    @NotNull(message = "Date of sunrise/sunset cannot be null")
     private LocalDate dateOfSunriseSunset;
+
     private LocalTime timeOfSunrise;
     private LocalTime timeOfSunset;
     private String weatherConditions;

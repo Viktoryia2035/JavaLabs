@@ -1,5 +1,6 @@
 package sunposition.springday.controller;
 
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -39,7 +40,7 @@ public class DayController {
 
     @PostMapping("/saveSunriseSunset")
     public ResponseEntity<DayDto> saveSunriseSunset(
-            @RequestBody final DayDto dayDto) {
+            @Valid @RequestBody final DayDto dayDto) {
         LOGGER.info("Saving sunrise and sunset time");
         Day day = DayMapper.toEntity(dayDto);
         Day savedDay = service.saveSunriseSunset(day);

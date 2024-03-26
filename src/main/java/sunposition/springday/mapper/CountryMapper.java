@@ -27,18 +27,4 @@ public final class CountryMapper {
         country.setLanguage(countryDto.getLanguage());
         return country;
     }
-
-    public static String toString(final Country country) {
-        if (country == null) {
-            return "Country{null}";
-        }
-        int daysCount = country.getDays().size();
-        return "Country{"
-                + "name='" + country.getName() + '\''
-                + ", capital='" + country.getCapital() + '\''
-                + ", population=" + country.getPopulation()
-                + ", language='" + country.getLanguage() + '\''
-                + ", daysCount=" + daysCount
-                + '}';
-    }
 }

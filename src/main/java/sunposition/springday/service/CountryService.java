@@ -16,6 +16,8 @@ import sunposition.springday.repository.InMemoryDayDAO;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -88,13 +90,45 @@ public class CountryService {
         }
     }
 
+    public void bulkSaveDays(CountryDto countryDto) {
+        try {
+            // Correctly use the findByName method from the repository to find a country by its name
+            Country country = repositoryOfCountry.findByName(countryDto.getName())
+                    .orElseThrow(() -> new HttpErrorExceptions.CustomNotFoundException("Country not found"));
+
+            // Convert DayDto to Day entities and set the country for each day
+            List<Day> days = countryDto.getDays().stream()
+                    .map(dayDto -> {
+                        Day day = DayMapper.toEntity(dayDto);
+                        day.setCountry(country);
+                        return day;
+                    })
+                    .collect(Collectors.toList());
+
+            // Save all days
+            repositoryOfDay.saveAll(days);
+
+            // Update the country with the saved days
+            country.setDays(days);
+            repositoryOfCountry.save(country);
+
+            // Clear the cache to ensure fresh data is fetched next time
+            countryCache.clear();
+            dayCache.clear();
+        } catch (Exception e) {
+            throw new HttpErrorExceptions.CustomInternalServerErrorException("An error occurred while saving days", e);
+        }
+    }
+
+
     public CountryDto findByNameCountry(final String name) {
         try {
             Object cachedObject = countryCache.get(name);
             if (cachedObject instanceof CountryDto countryDto) {
                 return countryDto;
             }
-            Country country = repositoryOfCountry.findByName(name);
+            Country country = repositoryOfCountry.findByName(name)
+                    .orElseThrow(() -> new HttpErrorExceptions.CustomNotFoundException("Country not found"));
             if (country == null) {
                 throw new HttpErrorExceptions.
                         CustomNotFoundException(MESSAGE_OF_COUNTRY);
@@ -137,7 +171,8 @@ public class CountryService {
                         CustomBadRequestException(
                         "New country name cannot be empty");
             }
-            Country existingCountry = repositoryOfCountry.findByName(name);
+            Country existingCountry = repositoryOfCountry.findByName(name)
+                    .orElseThrow(() -> new HttpErrorExceptions.CustomNotFoundException("Country not found"));
             if (existingCountry == null) {
                 throw new HttpErrorExceptions.
                         CustomNotFoundException(

@@ -1,5 +1,6 @@
 package sunposition.springday.controller;
 
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -38,13 +39,21 @@ public class CountryController {
 
     @PostMapping("/saveCountry")
     public ResponseEntity<CountryDto> saveCountry(
-            @RequestBody final CountryDto countryDto) {
+            @Valid @RequestBody final CountryDto countryDto) {
         LOGGER.info("Saving country: {}", countryDto.getName());
         CountryDto savedCountryDto = service.saveCountry(countryDto);
         LOGGER.info(
                 "Country saved successfully: {}",
                 savedCountryDto.getName());
         return ResponseEntity.status(HttpStatus.CREATED).body(savedCountryDto);
+    }
+
+    @PostMapping("/bulkSaveDays")
+    public ResponseEntity<String> bulkSaveDays(@Valid @RequestBody final CountryDto countryDto) {
+        LOGGER.info("Saving multiple days for country: {}", countryDto.getName());
+        service.bulkSaveDays(countryDto);
+        LOGGER.info("Days saved successfully for country: {}", countryDto.getName());
+        return ResponseEntity.status(HttpStatus.CREATED).body("Days saved successfully");
     }
 
     @GetMapping("/findName")
