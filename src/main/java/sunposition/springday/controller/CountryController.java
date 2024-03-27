@@ -49,11 +49,15 @@ public class CountryController {
     }
 
     @PostMapping("/bulkSaveDays")
-    public ResponseEntity<String> bulkSaveDays(@Valid @RequestBody final CountryDto countryDto) {
-        LOGGER.info("Saving multiple days for country: {}", countryDto.getName());
+    public ResponseEntity<String> bulkSaveDays(
+            @Valid @RequestBody final CountryDto countryDto) {
+        LOGGER.info("Saving multiple days for country: {}",
+                countryDto.getName());
         service.bulkSaveDays(countryDto);
-        LOGGER.info("Days saved successfully for country: {}", countryDto.getName());
-        return ResponseEntity.status(HttpStatus.CREATED).body("Days saved successfully");
+        LOGGER.info("Days saved successfully for country: {}",
+                countryDto.getName());
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body("Days saved successfully");
     }
 
     @GetMapping("/findName")
