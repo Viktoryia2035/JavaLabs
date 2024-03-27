@@ -93,7 +93,7 @@ public class CountryService {
             Country country = repositoryOfCountry.
                     findByName(countryDto.getName())
                     .orElseThrow(() -> new HttpErrorExceptions.
-                            CustomNotFoundException("Country not found"));
+                            CustomNotFoundException(MESSAGE_OF_COUNTRY));
             List<Day> days = new ArrayList<>();
             for (DayDto dayDto : countryDto.getDays()) {
                 Day day = DayMapper.toEntity(dayDto);
