@@ -122,7 +122,7 @@ public class CountryService {
             }
             Country country = repositoryOfCountry.findByName(name)
                     .orElseThrow(() -> new HttpErrorExceptions.
-                            CustomNotFoundException("Country not found"));
+                            CustomNotFoundException(MESSAGE_OF_COUNTRY));
             if (country == null) {
                 throw new HttpErrorExceptions.
                         CustomNotFoundException(MESSAGE_OF_COUNTRY);
