@@ -173,7 +173,7 @@ public class CountryService {
                         CustomNotFoundException(
                         MESSAGE_OF_COUNTRY);
             }
-            if (repositoryOfCountry.findByName(newName) != null) {
+            if (repositoryOfCountry.findByName(newName).isPresent()) {
                 throw new HttpErrorExceptions.
                         CustomBadRequestException(
                         MESSAGE_COUNTRY_ALREADY_EXISTS);
